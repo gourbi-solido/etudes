@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu des Études Solido</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f2eb;
+        }
+        .menu-bar {
+            background-color: #3b2e24;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 3px solid #d4b68a;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .menu-bar label {
+            color: #fffdf9;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        .menu-bar select {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #cbb295;
+            background-color: #fffdf9;
+            color: #2e2b28;
+            cursor: pointer;
+            font-weight: bold;
+            outline: none;
+        }
+        .menu-bar select:hover {
+            border-color: #bfa27a;
+        }
+        iframe {
+            width: 100%;
+            height: calc(100vh - 75px); /* Prend toute la hauteur restante de l'écran */
+            border: none;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-bar">
+        <label for="studySelector">📚 Choisissez une étude :</label>
+        <select id="studySelector" onchange="changeStudy()">
+            <!-- C'EST ICI QUE VOUS AJOUTEREZ VOS ÉTUDES -->
+            <option value="4156_duesenberg.html">Réf. 4156 - Duesenberg J</option>
+            <option value="4046_rolls.html">Réf. 4046 - Rolls Royce Phantom III</option>
+            <option value="46_rolls.html">Réf. 46 - Rolls Royce Phantom III (Ancienne)</option>
+        </select>
+    </div>
+
+    <!-- Par défaut, on affiche la première étude de la liste -->
+    <iframe id="studyFrame" src="4156_duesenberg.html"></iframe>
+
+    <script>
+        function changeStudy() {
+            var selector = document.getElementById("studySelector");
+            var iframe = document.getElementById("studyFrame");
+            
+            // On récupère le nom du fichier choisi et on le met dans l'iframe
+            iframe.src = selector.value;
+            
+            // On remonte en haut de la page (utile si la souris est restée en bas)
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
