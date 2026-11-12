@@ -3,30 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu des Études Solido</title>
+    <title>Le Gourbi Solido - Hub des Études</title>
     <style>
+        * { box-sizing: border-box; }
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
             background-color: #f5f2eb;
+            color: #2e2b28;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
         }
+
+        /* ================= BARRE DE MENU (Gourbi) ================= */
         .menu-bar {
             background-color: #3b2e24;
-            padding: 15px;
-            text-align: center;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             border-bottom: 3px solid #d4b68a;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 10;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .menu-bar .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .menu-bar .logo-area h1 {
+            color: #fffdf9;
+            font-size: 1.3rem;
+            margin: 0;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+        .menu-bar .logo-area img {
+            height: 30px;
+            border-radius: 4px;
+        }
+        .menu-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         .menu-bar label {
             color: #fffdf9;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: bold;
-            margin-right: 15px;
         }
         .menu-bar select {
-            padding: 10px 15px;
-            font-size: 1rem;
+            padding: 8px 12px;
+            font-size: 0.95rem;
             border-radius: 8px;
             border: 1px solid #cbb295;
             background-color: #fffdf9;
@@ -35,36 +67,279 @@
             font-weight: bold;
             outline: none;
         }
-        .menu-bar select:hover {
-            border-color: #bfa27a;
+        .menu-bar select:hover { border-color: #bfa27a; }
+
+        /* ================= ZONE DE CONTENU ================= */
+        .content-area {
+            flex-grow: 1;
+            position: relative;
+            overflow-y: auto;
         }
-        iframe {
+
+        /* L'iframe pour les études (cachée par défaut) */
+        #studyFrame {
             width: 100%;
-            height: calc(100vh - 75px);
+            height: 100%;
             border: none;
-            display: block;
+            display: none;
+            background-color: #fffdf9;
         }
+
+        /* ================= PAGE D'ACCUEIL ================= */
+        #homePage {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        .hero-box {
+            background: #fffdf9;
+            padding: 3rem 2rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid #e2d9cf;
+        }
+        .hero-box h2 {
+            color: #3b2e24;
+            font-size: 2rem;
+            margin-top: 0;
+            border-bottom: 3px solid #d4b68a;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        .hero-box p {
+            color: #6d5d4e;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Barre de recherche */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+        .search-container input {
+            width: 60%;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border: 2px solid #cbb295;
+            border-radius: 30px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .search-container input:focus {
+            border-color: #b58b5c;
+            box-shadow: 0 0 10px rgba(181, 139, 92, 0.2);
+        }
+        .search-container button {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fffdf9;
+            background-color: #b58b5c;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .search-container button:hover { background-color: #a37a4d; }
+
+        /* Zone des résultats */
+        #searchResults {
+            text-align: left;
+            margin-top: 2rem;
+        }
+        .result-card {
+            background: #f9f1e6;
+            padding: 15px 20px;
+            border-left: 5px solid #b58b5c;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+        .result-card:hover {
+            transform: translateX(5px);
+            background: #f4eadc;
+        }
+        .result-info h4 { margin: 0 0 5px 0; color: #3b2e24; }
+        .result-info p { margin: 0; font-size: 0.9rem; color: #6d5d4e; }
+        .result-card a {
+            background: #b58b5c;
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .result-card a:hover { background: #a37a4d; }
+        .no-result { color: #d9534f; font-weight: bold; font-style: italic; }
     </style>
 </head>
 <body>
 
+    <!-- ================= BARRE DE MENU ================= -->
     <div class="menu-bar">
-        <label for="studySelector">📚 Choisissez une étude :</label>
-        <select id="studySelector" onchange="changeStudy()">
-            <!-- On ne met que le fichier qui existe réellement -->
-            <option value="46_ROLLS-ROYCE-PHANTOM-III.html">Réf. 46 - Rolls Royce Phantom III</option>
-        </select>
+        <div class="logo-area">
+            <!-- Remplacer par le logo du Gourbi si vous le souhaitez -->
+            <h1>Le Gourbi Solido - Études</h1>
+        </div>
+        <div class="menu-controls">
+            <label for="studySelector">📚 Aller à une étude :</label>
+            <select id="studySelector" onchange="changeStudy()">
+                <option value="home">🏠 Accueil / Recherche</option>
+                <option value="46_ROLLS-ROYCE-PHANTOM-III.html">Réf. 46 - Rolls Royce Phantom III</option>
+                <option value="4046_ROLLS-ROYCE-PHANTOM-III.html">Réf. 4046 - Rolls Royce Phantom III</option>
+                <option value="4156_DUESENBERG-J.html">Réf. 4156 - Duesenberg J</option>
+                <option value="etudes_boites_age_d_or.html">Les Boîtes Age d'Or</option>
+                <option value="maxicar_chassis.html">Les châssis Maxicar</option>
+            </select>
+        </div>
     </div>
 
-    <!-- On met le bon nom de fichier ici aussi -->
-    <iframe id="studyFrame" src="46_ROLLS-ROYCE-PHANTOM-III.html"></iframe>
+    <!-- ================= ZONE DE CONTENU ================= -->
+    <div class="content-area">
+        
+        <!-- PAGE D'ACCUEIL & RECHERCHE -->
+        <div id="homePage">
+            <div class="hero-box">
+                <h2>Bienvenue sur le Hub des Études</h2>
+                <p>Recherchez une étude, une référence ou un modèle dans notre base de données.</p>
+                
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Ex: Rolls, 4046, Duesenberg, boîte..." onkeypress="handleKeyPress(event)">
+                    <button onclick="searchStudies()">Rechercher</button>
+                </div>
 
+                <div id="searchResults">
+                    <!-- Les résultats apparaîtront ici -->
+                </div>
+            </div>
+        </div>
+
+        <!-- IFRAME POUR LES ÉTUDES -->
+        <iframe id="studyFrame" src=""></iframe>
+
+    </div>
+
+    <!-- ================= SCRIPTS ================= -->
     <script>
+        // Base de données des études pour la recherche
+        const studiesDatabase = [
+            { 
+                title: "Réf. 46 Rolls Royce Phantom III", 
+                keywords: "46 rolls royce phantom capote fermée 1939 bordeaux baot", 
+                file: "46_ROLLS-ROYCE-PHANTOM-III.html",
+                desc: "Étude chronologique des conditionnements (1976-1983)."
+            },
+            { 
+                title: "Réf. 4046 Rolls Royce Phantom III", 
+                keywords: "4046 rolls royce phantom capote fermée baot-ix", 
+                file: "4046_ROLLS-ROYCE-PHANTOM-III.html",
+                desc: "Étude chronologique des conditionnements (1982-1988)."
+            },
+            { 
+                title: "Réf. 4156 Duesenberg J", 
+                keywords: "4156 duesenberg berline 1935 boîte socle blanc", 
+                file: "4156_DUESENBERG-J.html",
+                desc: "Étude des conditionnements Type 1 à 5 (1982-2001)."
+            },
+            { 
+                title: "Étude : Les Boîtes Age d'Or", 
+                keywords: "boîtes age d'or baot étui", 
+                file: "etudes_boites_age_d_or.html",
+                desc: "Analyse des différents étuis et boîtes de la gamme."
+            },
+            { 
+                title: "Étude : Les châssis Maxicar", 
+                keywords: "maxicar chassis 1/32 démontable opel 504 r16 taunus", 
+                file: "maxicar_chassis.html",
+                desc: "Un petit topo sur les châssis de la série Maxicar."
+            }
+        ];
+
+        // Gestion du changement dans le menu déroulant
         function changeStudy() {
             var selector = document.getElementById("studySelector");
             var iframe = document.getElementById("studyFrame");
-            iframe.src = selector.value;
-            window.scrollTo(0, 0);
+            var homePage = document.getElementById("homePage");
+            var selectedValue = selector.value;
+
+            if (selectedValue === "home") {
+                // Afficher l'accueil, cacher l'iframe
+                homePage.style.display = "block";
+                iframe.style.display = "none";
+                iframe.src = ""; // Vider l'iframe
+            } else {
+                // Cacher l'accueil, afficher l'iframe
+                homePage.style.display = "none";
+                iframe.style.display = "block";
+                iframe.src = selectedValue;
+            }
+        }
+
+        // Fonction de recherche
+        function searchStudies() {
+            var query = document.getElementById("searchInput").value.toLowerCase().trim();
+            var resultsContainer = document.getElementById("searchResults");
+            resultsContainer.innerHTML = ""; // Vider les anciens résultats
+
+            if (query === "") {
+                resultsContainer.innerHTML = "<p class='no-result'>Veuillez entrer un mot-clé.</p>";
+                return;
+            }
+
+            // Filtrer la base de données
+            var results = studiesDatabase.filter(function(study) {
+                return study.title.toLowerCase().includes(query) || 
+                       study.keywords.toLowerCase().includes(query) ||
+                       study.desc.toLowerCase().includes(query);
+            });
+
+            // Afficher les résultats
+            if (results.length > 0) {
+                results.forEach(function(study) {
+                    var card = document.createElement("div");
+                    card.className = "result-card";
+                    card.innerHTML = `
+                        <div class="result-info">
+                            <h4>${study.title}</h4>
+                            <p>${study.desc}</p>
+                        </div>
+                        <a href="#" onclick="loadStudyFromSearch('${study.file}')">Voir l'étude</a>
+                    `;
+                    resultsContainer.appendChild(card);
+                });
+            } else {
+                resultsContainer.innerHTML = "<p class='no-result'>Aucune étude ne correspond à votre recherche.</p>";
+            }
+        }
+
+        // Charger une étude depuis les résultats de recherche
+        function loadStudyFromSearch(file) {
+            var selector = document.getElementById("studySelector");
+            var iframe = document.getElementById("studyFrame");
+            var homePage = document.getElementById("homePage");
+
+            // Mettre à jour le menu déroulant
+            selector.value = file;
+            
+            // Cacher l'accueil, afficher l'étude
+            homePage.style.display = "none";
+            iframe.style.display = "block";
+            iframe.src = file;
+        }
+
+        // Valider la recherche avec la touche Entrée
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                searchStudies();
+            }
         }
     </script>
 </body>
