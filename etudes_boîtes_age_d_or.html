@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Étude des boîtes Age d'Or - Solido</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f5f2eb;
+            color: #2e2b28;
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #fffdf9;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-radius: 24px;
+            padding: 2rem 2rem 3rem;
+            border: 1px solid #e2d9cf;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-top: 0;
+            margin-bottom: 0.4rem;
+            color: #3b2e24;
+            border-bottom: 3px solid #d4b68a;
+            padding-bottom: 0.6rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: #6d5d4e;
+            margin-bottom: 2rem;
+            font-style: italic;
+            background: #faf3e8;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            display: inline-block;
+        }
+        .intro-text {
+            background: #f9f1e6;
+            border-left: 6px solid #b58b5c;
+            padding: 1.2rem 1.5rem;
+            border-radius: 12px;
+            margin: 1.8rem 0 2.2rem;
+            font-size: 0.95rem;
+            color: #3d3228;
+        }
+        .intro-text p { margin: 0.4rem 0; }
+        .chrono-section {
+            margin: 2.8rem 0 1.5rem;
+            position: relative;
+        }
+        .chrono-section h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #5a3e2b;
+            margin: 0 0 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .chrono-section h2 .date-badge {
+            background: #bfa27a;
+            color: #fffdf9;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
+        }
+        .box-card {
+            background: #ffffff;
+            border: 1px solid #e6ddd3;
+            border-radius: 20px;
+            padding: 1.6rem 1.8rem;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            transition: border-color 0.15s;
+        }
+        .box-card:hover { border-color: #cbb295; }
+        .box-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.6rem;
+            border-bottom: 1px dashed #e0d4c6;
+            padding-bottom: 0.6rem;
+        }
+        .box-title {
+            font-size: 1.3rem;
+            font-weight: 650;
+            color: #3d2b1c;
+        }
+        .box-id {
+            font-family: 'Courier New', monospace;
+            background: #f1ebe4;
+            padding: 0.15rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #5b3f2c;
+            letter-spacing: 0.3px;
+        }
+        .box-dates {
+            font-size: 0.9rem;
+            color: #7a6857;
+            background: #fcf7f0;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+            border: 1px solid #e9dacc;
+        }
+        .variant {
+            margin: 1.4rem 0 0.8rem;
+            padding-left: 0.9rem;
+            border-left: 3px solid #cbb295;
+        }
+        .variant strong {
+            font-size: 1.1rem;
+            color: #4e3826;
+            letter-spacing: 0.2px;
+        }
+        .variant-date {
+            font-size: 0.85rem;
+            color: #8b7a69;
+            font-weight: 500;
+            margin-left: 0.6rem;
+        }
+        .desc {
+            margin: 0.5rem 0 1rem;
+            font-size: 0.98rem;
+            color: #2e2b28;
+        }
+        .desc p { margin: 0.4rem 0; }
+        .desc .legend {
+            font-size: 0.9rem;
+            color: #6d5d4e;
+            font-style: italic;
+            margin: 0.3rem 0;
+        }
+
+        /* ====== GALERIE PHOTOS AVEC ZOOM ×8 ====== */
+        .photos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 1rem 0 0.6rem;
+        }
+        .photos .photo-item {
+            display: inline-block;
+            border-radius: 10px;
+            cursor: pointer;
+            line-height: 0;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1),
+                        box-shadow 0.3s ease,
+                        z-index 0s;
+        }
+        .photos .photo-item img {
+            display: block;
+            width: 160px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #e0d4c6;
+            background: #f8f4ef;
+            transition: border-color 0.3s ease, filter 0.3s ease;
+        }
+        .photos .photo-item:hover {
+            transform: scale(1.9);
+            transform-origin: center center;
+            z-index: 9999;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+        }
+        .photos .photo-item:hover img {
+            border-color: #b58b5c;
+            filter: brightness(1.05);
+        }
+        .box-card, .variant, .desc { overflow: visible; }
+
+        /* ====== DIAPORAMA ====== */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 10, 5, 0.93);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            animation: fadeIn 0.2s ease;
+        }
+        .lightbox.open { display: flex; }
+
+        .lightbox-stage {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 92vw;
+        }
+        
+        .lightbox-img-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox img.main-img {
+            max-width: 88vw;
+            max-height: 82vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+            animation: zoomIn 0.25s ease;
+            background: #2a231c;
+            display: block;
+        }
+
+        .lightbox .close-btn {
+            position: fixed;
+            top: 1.2rem;
+            right: 1.6rem;
+            font-size: 1.6rem;
+            color: #fff;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: background 0.15s;
+            z-index: 100005;
+        }
+        .lightbox .close-btn:hover { background: rgba(255,255,255,0.35); }
+
+        .lightbox .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2.4rem;
+            font-weight: 300;
+            color: #fff;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: background 0.15s, transform 0.15s;
+            z-index: 100010;
+            user-select: none;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .lightbox .nav-btn:hover { background: rgba(255,255,255,0.4); color: #000; }
+        .lightbox .nav-btn:active { transform: translateY(-50%) scale(0.94); }
+        .lightbox .nav-btn.prev { left: 10px; }
+        .lightbox .nav-btn.next { right: 10px; }
+        .lightbox .nav-btn[disabled] { opacity: 0.2; cursor: default; background: rgba(0,0,0,0.3); border-color: transparent; }
+
+        .lightbox .counter {
+            margin-top: 1rem;
+            color: #f0e6da;
+            font-size: 0.95rem;
+            font-weight: 500;
+            background: rgba(0,0,0,0.45);
+            padding: 0.35rem 1.1rem;
+            border-radius: 30px;
+            letter-spacing: 0.4px;
+        }
+        .lightbox .caption {
+            margin-top: 0.4rem;
+            color: #cbb295;
+            font-size: 0.82rem;
+            font-family: 'Courier New', monospace;
+            max-width: 70vw;
+            text-align: center;
+            word-break: break-all;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .footnote {
+            font-size: 0.85rem;
+            margin-top: 1.2rem;
+            color: #6d5d4e;
+            border-top: 1px solid #e6ddd3;
+            padding-top: 0.8rem;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.7rem; }
+            .box-header { flex-direction: column; gap: 0.3rem; }
+            .box-title { font-size: 1.1rem; }
+            .photos .photo-item img { width: 120px; height: 90px; }
+            .photos .photo-item:hover { transform: scale(3); }
+            .lightbox .nav-btn { width: 46px; height: 46px; font-size: 1.8rem; left: 5px; right: 5px; }
+            .lightbox img.main-img { max-width: 95vw; max-height: 76vh; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Les boîtes Age d'Or Solido</h1>
+        <div class="subhead">Étude chronologique des conditionnements — mise à jour décembre 2024</div>
+
+        <div class="intro-text">
+            <p>La diversité des boîtes protégeant nos modèles fétiches peut s'avérer un vrai casse-tête. La plupart d'entre nous avons des miniatures dépourvues de boîte et pour lesquelles nous aimerions retrouver leur écrin. Mais la complexité de la tâche réside de trouver la "bonne boîte" suivant la couleur ou la version de châssis. Même s'il y a des exception à la règle et Solido nous gâte de ce point de vue là! Les ouvrages de Bertrand AZEMA nous permettent de répondre à nos attentes dans la mesure où les couleurs sont référencées.</p>
+            <p>Nous allons tenter au travers de ces quelques lignes de présenter chronologiquement les différents Types de boîtes. Espérant que cette étude devienne un outil, nous affecterons un identifiant pour chaque type de boîte pour appeler "un chat", "un chat". Et oui, car là ou le bas blesse, c'est qu'il existe parfois des variantes de boîtes pour un même type. Rien n'est figé dans le marbre. Pour définir les dates de commercialisation des boîtes, je me suis appuyé sur les ouvrages de B. AZEMA, ainsi que mes recherches et ma petite expérience. Il n'est des dates réellement précises, mais approximatives qui sont parfois la résultante d'une déduction. Toute suggestion et toute information seront les bienvenues. Mais avant de lire le sujet, je vous en prie, prenez un décontractant!</p>
+            <p><strong>🔍 Astuce :</strong> survolez une photo pour un zoom ×8, cliquez pour ouvrir le diaporama de la série.</p>
+        </div>
+
+        <!-- ========== BAOT-I ========== -->
+        <div class="chrono-section">
+            <h2>BAOT-I <span class="date-badge">01-1964 / 12-1966</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="box-header">
+                <span class="box-title">BOÎTE AGE D'OR TYPE I / ID : BAOT-I(x)</span>
+                <span class="box-dates">01-1964 / 12-1966</span>
+            </div>
+            <div class="desc">
+                <p>Les boîtes de Type 1 sont des boîtes personnalisées avec un dessin en noir et blanc du modèle qu'elle contient. Les trois premiers modèles de la gamme Age d'Or reçoivent une boîte non standardisée soit par les dimensions, soit par la couleur soit par les les deux. Il peut paraître superflu de distinguer des variantes pour si peu de boîtes, seulement cela permet de mettre en évidence une chronologie d'apparition de celles-ci. Et puis, n'oublions pas que les boîtes des trois premiers modèles etaient identifiée par un numéro de séquence par ordre de sortie des modèles.</p>
+            </div>
+
+            <div class="variant">
+                <strong>BAOT-Ia</strong><span class="variant-date">(01-1964 / 12-1966)</span>
+                <div class="desc">
+                    <p>Cela fait bientôt 60 ans qu'apparaissait la première Age d'Or! En effet, c'est en janvier 1964 que Solido allait cibler un public particulier en proposant non plus un jouet mais une miniature de collection. Ainsi les papas pouvaient se faire plaisir et il était également possible de leur faire plaisir pour différents événements.</p>
+                    <p>Le premier modèle qui allait donner suite à de nombreux autres était la MERCEDES SS 1928 version fermée référence 132. La boîte est ajustée aux dimensions du modèle. Les dimensions en centimètres de la boite (L x l x h) sont : 11,50 X 4,00 X 4,00 cm. Curieusement, le dessin représente une version ouverte! Certainement que le projet prévoyait deux versions. La couleur est rouge-rose. Le chiffre "1" est imprimé sur les cotés ainsi que sur la face avec le dessin représentant le modèle.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-Ia-001"><img src="https://i.postimg.cc/YSSGghPL/SOLIDO-BOITE-BAOT-Ia-001.jpg" alt="BAOT-Ia 001"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-Ia-002"><img src="https://i.postimg.cc/Gpp8YHfs/SOLIDO-BOITE-BAOT-Ia-002.jpg" alt="BAOT-Ia 002"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-Ia-003"><img src="https://i.postimg.cc/8CCJWjYJ/SOLIDO-BOITE-BAOT-Ia-003.jpg" alt="BAOT-Ia 003"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-Ia-004"><img src="https://i.postimg.cc/VNNrMdhS/SOLIDO-BOITE-BAOT-Ia-004.jpg" alt="BAOT-Ia 004"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-Ia-005"><img src="https://i.postimg.cc/5ttYv6rz/SOLIDO-BOITE-BAOT-Ia-005.jpg" alt="BAOT-Ia 005"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="variant">
+                <strong>BAOT-Ib</strong><span class="variant-date">(08-1964 / 12-1966)</span>
+                <div class="desc">
+                    <p>Huit mois à peine séparent le deuxième modèle Age d'Or du premier. Il s'agit d'un Monument de l'histoire automobile, la BUGATTI Royale Réf. 136. Les proportions extravagantes du vaisseau imposa une boîte au dimensions (L x l x h) plus généreuses que la Réf. 132, 15,20 X 6,15 X 6,15 cm. La boîte est blanche avec le texte et le dessin marron ou olive. Le chiffre "2" est imprimé sur les cotés ainsi que sur la face avec le dessin représentant le modèle.</p>
+                    <p>Ce format s'imposera comme un standard à partir du quatrième modèle Age d'Or, la PANHARD & LEVASSOR 8Cyl. 35 CV 1925 Landaulet.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-Ib-001"><img src="https://i.postimg.cc/2ynVmv1K/SOLIDO-BOITE-BAOT-Ib-001.jpg" alt="BAOT-Ib 001"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-Ib-002"><img src="https://i.postimg.cc/nrqCZ7Xw/SOLIDO-BOITE-BAOT-Ib-002.jpg" alt="BAOT-Ib 002"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-Ib-003"><img src="https://i.postimg.cc/Bb2XsDjy/SOLIDO-BOITE-BAOT-Ib-003.jpg" alt="BAOT-Ib 003"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-Ib-004"><img src="https://i.postimg.cc/MH1vxRnL/SOLIDO-BOITE-BAOT-Ib-004.jpg" alt="BAOT-Ib 004"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-Ib-005"><img src="https://i.postimg.cc/QCcHs5Fw/SOLIDO-BOITE-BAOT-Ib-005.jpg" alt="BAOT-Ib 005"></span>
+                    </div>
+                    <p class="legend">comparaison des boîtes des deux premières "Age d'Or"</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-Ib-006"><img src="https://i.postimg.cc/Yqfhs6Ky/SOLIDO-BOITE-BAOT-Ib-006.jpg" alt="BAOT-Ib 006"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="variant">
+                <strong>BAOT-Ic</strong><span class="variant-date">(01-1965 / 12-1966)</span>
+                <div class="desc">
+                    <p>Un an après la version fermée, Solido propose la version ouverte de la belle Teutonne sous la référence 137. La boîte  est jaune et est pour le reste identique à la BAOT-Ia de la réf. 132 : (L x l x h) 11,50 X 4,00 X 4,00 cm. Le chiffre "3" est imprimé sur les cotés ainsi que sur la face avec le dessin représentant le modèle. Les photographies de cette référence appartiennent à Éric (@erbo62)</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="Ic_0110"><img src="https://i.servimg.com/u/f51/17/62/53/34/ic_0110.jpg" alt="BAOT-Ic 01"></span>
+                        <span class="photo-item" data-caption="Ic_0210"><img src="https://i.servimg.com/u/f51/17/62/53/34/ic_0210.jpg" alt="BAOT-Ic 02"></span>
+                        <span class="photo-item" data-caption="Ic_0310"><img src="https://i.servimg.com/u/f51/17/62/53/34/ic_0310.jpg" alt="BAOT-Ic 03"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="variant">
+                <strong>BAOT-Id</strong><span class="variant-date">(01-1966 / 12-1966)</span>
+                <div class="desc">
+                    <p>Les dimensions de la boîte sont identique à la boîte BAOT-Ib, (L x l x h) 15,20 X 6,15 X 6,15 cm. la couleur est rouge. Le numéro de séquence n'est plus précisé. Seul un dessin noir et blanc représente le modèle sur une face. A ce jour, je n'ai pas vu le modèle dans la boîte BAOT-II. Ce qui laisse à penser que la miniature fut commercialisée dans cette boîte jusqu'au mois de mars 1969, veille de l'apparition de la boîte Rouge et Or (BAOT-III)</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-Id-001"><img src="https://i.postimg.cc/BbC4MCL0/SOLIDO-BOITE-BAOT-Id-001.jpg" alt="BAOT-Id 001"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-Id-002"><img src="https://i.postimg.cc/7hNwmNGr/SOLIDO-BOITE-BAOT-Id-002.jpg" alt="BAOT-Id 002"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-Id-003"><img src="https://i.postimg.cc/d39w49kP/SOLIDO-BOITE-BAOT-Id-003.jpg" alt="BAOT-Id 003"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-Id-004"><img src="https://i.postimg.cc/T1cfCcLX/SOLIDO-BOITE-BAOT-Id-004.jpg" alt="BAOT-Id 004"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-Id-005"><img src="https://i.postimg.cc/mkSB8SzR/SOLIDO-BOITE-BAOT-Id-005.jpg" alt="BAOT-Id 005"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BAOT-II ========== -->
+        <div class="chrono-section">
+            <h2>BAOT-II <span class="date-badge">01-1967 / 03-1969</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="box-header">
+                <span class="box-title">BOÎTE AGE D'OR TYPE II / ID : BAOT-II</span>
+                <span class="box-dates">01-1967 / 03-1969</span>
+            </div>
+            <div class="desc">
+                <p>Les dimensions de la boîte et la couleur sont identiques à la boîte BAOT-Id, (L x l x h) 15,20 X 6,15 X 6,15 cm. la couleur est rouge. La Boîte possède une ouverture sur une face. Ainsi, il n'y a plus de dessin représentant le modèle car ce dernier est visible sans ouvrir la boîte. C'est la RENAULT 40 CV 1926 Landaulet qui étrennera ce nouvel écrin.</p>
+                <p>Les photographies de cette référence appartiennent à Éric (@erbo62)</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="Id_ii_11"><img src="https://i.servimg.com/u/f51/17/62/53/34/id_ii_11.jpg" alt="BAOT-II 11"></span>
+                    <span class="photo-item" data-caption="Id_ii_10"><img src="https://i.servimg.com/u/f51/17/62/53/34/id_ii_10.jpg" alt="BAOT-II 10"></span>
+                    <span class="photo-item" data-caption="Id_ii_12"><img src="https://i.servimg.com/u/f51/17/62/53/34/id_ii_12.jpg" alt="BAOT-II 12"></span>
+                    <span class="photo-item" data-caption="Id_ii_14"><img src="https://i.servimg.com/u/f51/17/62/53/34/id_ii_14.jpg" alt="BAOT-II 14"></span>
+                    <span class="photo-item" data-caption="Id_ii_15"><img src="https://i.servimg.com/u/f51/17/62/53/34/id_ii_15.jpg" alt="BAOT-II 15"></span>
+                    <span class="photo-item" data-caption="Id_ii_13"><img src="https://i.servimg.com/u/f51/17/62/53/34/id_ii_13.jpg" alt="BAOT-II 13"></span>
+                    <span class="photo-item" data-caption="Id_ii_16"><img src="https://i.servimg.com/u/f51/17/62/53/34/id_ii_16.jpg" alt="BAOT-II 16"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BAOT-III ========== -->
+        <div class="chrono-section">
+            <h2>BAOT-III <span class="date-badge">04-1969 / 05-1976</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="box-header">
+                <span class="box-title">BOÎTE AGE D'OR TYPE III / ID : BAOT-III</span>
+                <span class="box-dates">04-1969 / 05-1976</span>
+            </div>
+            <div class="desc">
+                <p>Les dimensions de la boîte sont inchangées, (L x l x h) 15,20 X 6,15 X 6,15 cm. la couleur est rouge et or. La Boîte possède une ouverture sur deux faces. Ce conditionnement apparaît en avril 1969 avec la DUESENBERG J 1931 Limousine Réf. 156</p>
+                <p>Notons que la DUESENBERG est le dernier modèle Age d'Or de la sérié 100. Le prochain modèle naîtra dans la série 10 en décembre 1974 avec la CITROËN Traction 15 CV 6 Cyl. Elle achèvera sa carrière en décembre 1975 avec la DELAGE D8-120 1939 capote fermée jusqu'à l'apparition d'un nouveau conditionnement en juin 1976. cela explique donc mieux la longue existence de cette boîte.</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-III-001"><img src="https://i.postimg.cc/3JwPshzj/SOLIDO-BOITE-BAOT-III-001.jpg" alt="BAOT-III 001"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-III-002"><img src="https://i.postimg.cc/CLKW309H/SOLIDO-BOITE-BAOT-III-002.jpg" alt="BAOT-III 002"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-III-003"><img src="https://i.postimg.cc/15zLkSbG/SOLIDO-BOITE-BAOT-III-003.jpg" alt="BAOT-III 003"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-III-004"><img src="https://i.postimg.cc/02NLTvh0/SOLIDO-BOITE-BAOT-III-004.jpg" alt="BAOT-III 004"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-III-005"><img src="https://i.postimg.cc/wTBSCznw/SOLIDO-BOITE-BAOT-III-005.jpg" alt="BAOT-III 005"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BAOT-IV ========== -->
+        <div class="chrono-section">
+            <h2>BAOT-IV <span class="date-badge">06-1976 / 09-1979</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="box-header">
+                <span class="box-title">BOÎTE AGE D'OR TYPE IV / ID : BAOT-IV(x)</span>
+                <span class="box-dates">06-1976 / 09-1979</span>
+            </div>
+            <div class="desc">
+                <p>Plus couramment appelée boîte vitrine bordeaux, elle apparaît avec la Rolls Roce Phantom III Réf. 46. la boîte est de couleur bordeaux avec liseré jaune orangé. A ce jour, j'ai identifié deux variantes. En effet, les dimensions de l'ouverture sont différentes. Mais laquelle est apparue en premier? Nous pouvons affirmer qu'elle fut créée durant la période de la série 10. Maintenant, il reste à identifier le premier modèle qui ne reçut qu'un seul type de boîte bordeaux, et là c'est moins évident si nous ne sommes pas en possession de toutes les versions de boîtes pour chaque modèle Age d'Or de cette période. Dans un premier temps, j'ai pu définir au moins une plage de date pour les deux types. Après quelques investigation, il semblerait que le premier modèle à recevoir qu'un seul type de boîte bordeaux soit la ROLLS ROYCE Phantom III Coupé de Ville Réf. 71 produite à partir du mois de septembre 1978.</p>
+            </div>
+            <div class="variant">
+                <strong>BAOT-IVa</strong><span class="variant-date">(06-1976 / 08-1978)</span>
+                <div class="desc">
+                    <p>Il s'agit d'une boîte bordeaux avec les grandes faces ouvertes.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IVa-001"><img src="https://i.postimg.cc/mkg5W3pb/SOLIDO-BOITE-BAOT-IVa-001.jpg" alt="BAOT-IVa 001"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IVa-002"><img src="https://i.postimg.cc/T134vjNd/SOLIDO-BOITE-BAOT-IVa-002.jpg" alt="BAOT-IVa 002"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IVa-003"><img src="https://i.postimg.cc/yx8bChps/SOLIDO-BOITE-BAOT-IVa-003.jpg" alt="BAOT-IVa 003"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IVa-004"><img src="https://i.postimg.cc/kGgpPNYM/SOLIDO-BOITE-BAOT-IVa-004.jpg" alt="BAOT-IVa 004"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IVa-005"><img src="https://i.postimg.cc/tJ4MGdvg/SOLIDO-BOITE-BAOT-IVa-005.jpg" alt="BAOT-IVa 005"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IVa-006"><img src="https://i.postimg.cc/8cz0gdX5/SOLIDO-BOITE-BAOT-IVa-006.jpg" alt="BAOT-IVa 006"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="variant">
+                <strong>BAOT-IVb</strong><span class="variant-date">(09-1978 / 09-1979)</span>
+                <div class="desc">
+                    <p>Il s'agit d'une boîte bordeaux avec les petites faces ouvertes.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IVb-002"><img src="https://i.postimg.cc/N08JyCWB/SOLIDO-BOITE-BAOT-IVb-002.jpg" alt="BAOT-IVb 002"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IVb-003"><img src="https://i.postimg.cc/vm7q12pM/SOLIDO-BOITE-BAOT-IVb-003.jpg" alt="BAOT-IVb 003"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IVb-004"><img src="https://i.postimg.cc/rpGndZvT/SOLIDO-BOITE-BAOT-IVb-004.jpg" alt="BAOT-IVb 004"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IVb-005"><img src="https://i.postimg.cc/YSNn4DJt/SOLIDO-BOITE-BAOT-IVb-005.jpg" alt="BAOT-IVb 005"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IVb-006"><img src="https://i.postimg.cc/XvKHZ1Tv/SOLIDO-BOITE-BAOT-IVb-006.jpg" alt="BAOT-IVb 006"></span>
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IVb-007"><img src="https://i.postimg.cc/TPj7yNZ3/SOLIDO-BOITE-BAOT-IVb-007.jpg" alt="BAOT-IVb 007"></span>
+                    </div>
+                    <p class="legend">Détail de la date de fabrication de la boîte</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IVb-008"><img src="https://i.postimg.cc/mZpdFH6N/SOLIDO-BOITE-BAOT-IVb-008.jpg" alt="BAOT-IVb 008"></span>
+                    </div>
+                    <p>Voici une des raisons pour laquelle j'ai attribué la boîte BAOT-IVb à la ROLLS ROYCE Phantom III Coupé de Ville.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IVb-001"><img src="https://i.postimg.cc/X7TQs0Wp/SOLIDO-BOITE-BAOT-IVb-001.jpg" alt="BAOT-IVb 001 Rolls"></span>
+                    </div>
+                    <p class="legend">La photographie ci-dessous mets en évidence les dimensions des ouvertures des faces</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IVb-009"><img src="https://i.postimg.cc/G34fKKYL/SOLIDO-BOITE-BAOT-IVb-009.jpg" alt="BAOT-IVb 009 dimensions"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BAOT-V ========== -->
+        <div class="chrono-section">
+            <h2>BAOT-V <span class="date-badge">10-1979 / 03-1980</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="box-header">
+                <span class="box-title">BOÎTE AGE D'OR TYPE V / ID : BAOT-V</span>
+                <span class="box-dates">10-1979 / 03-1980</span>
+            </div>
+            <div class="desc">
+                <p>Nous la nommons usuellement boîte noire. Mais nous devrions la nommer boîte noire type I pour être plus précis. Cependant, pour garder le fil directeur de l'histoire des boîtes Age d'Or, il s'agit bien d'une boîte Age d'Or Type V BAOT-V. pour sa première sortie, la CADILLAC 452 A V16 Impérial Landaulet Réf. 85 arbore cette boîte en octobre 1979. Au regard des informations figurant sur un flap, il est légitime de penser que cette boîte fut commercialisée bien avant pour un autre modèle de la gamme.</p>
+                <p>La boîte, ouverte sur deux faces, est de couleur noire avec le texte en jaune.</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-V-005"><img src="https://i.postimg.cc/CxD3qP4d/SOLIDO-BOITE-BAOT-V-005.jpg" alt="BAOT-V 005"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-V-006"><img src="https://i.postimg.cc/JzJfk6Qn/SOLIDO-BOITE-BAOT-V-006.jpg" alt="BAOT-V 006"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-V-007"><img src="https://i.postimg.cc/3xpsvSZN/SOLIDO-BOITE-BAOT-V-007.jpg" alt="BAOT-V 007"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-V-008"><img src="https://i.postimg.cc/8zW26Kbj/SOLIDO-BOITE-BAOT-V-008.jpg" alt="BAOT-V 008"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-V-009"><img src="https://i.postimg.cc/YCg5WnxF/SOLIDO-BOITE-BAOT-V-009.jpg" alt="BAOT-V 009"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-V-010"><img src="https://i.postimg.cc/3xpsvSZp/SOLIDO-BOITE-BAOT-V-010.jpg" alt="BAOT-V 010"></span>
+                </div>
+                <p class="legend">Indication de la date de production de la boîte.</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-V-011"><img src="https://i.postimg.cc/y8q5shzg/SOLIDO-BOITE-BAOT-V-011.jpg" alt="BAOT-V 011"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-V-012"><img src="https://i.postimg.cc/RZr841zN/SOLIDO-BOITE-BAOT-V-012.jpg" alt="BAOT-V 012"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BAOT-VI ========== -->
+        <div class="chrono-section">
+            <h2>BAOT-VI <span class="date-badge">04-1980 / 11-1981</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="box-header">
+                <span class="box-title">BOÎTE AGE D'OR TYPE VI / ID : BAOT-VI</span>
+                <span class="box-dates">04-1980 / 11-1981</span>
+            </div>
+            <div class="desc">
+                <p>Nous la nommons également boîte noire. Mais nous devrions la nommer boîte noire type II, toujours pour être plus précis. Cependant, pour conserver notre fil directeur de l'histoire des boîtes Age d'Or, il s'agit bien d'une boîte Age d'Or Type VI BAOT-VI. La boîte est ouverte sur trois faces. Si cette boîte innovante permet de voir le modèles sur plusieurs angles, elle le demeure avec la création d'un nouveau socle dont le seuil est plus haut que celui du socle plat connu jusqu'alors. La référence du socle est gravé 4001-601. Le premier nombre indique bien la référence du modèle pour lequel il fut créé.</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VI-005"><img src="https://i.postimg.cc/PrZHW5Xb/SOLIDO-BOITE-BAOT-VI-005.jpg" alt="BAOT-VI 005"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VI-006"><img src="https://i.postimg.cc/tCPb34qt/SOLIDO-BOITE-BAOT-VI-006.jpg" alt="BAOT-VI 006"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VI-007"><img src="https://i.postimg.cc/CLD0GxhG/SOLIDO-BOITE-BAOT-VI-007.jpg" alt="BAOT-VI 007"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VI-008"><img src="https://i.postimg.cc/9FT2dQmY/SOLIDO-BOITE-BAOT-VI-008.jpg" alt="BAOT-VI 008"></span>
+                </div>
+                <p class="legend">Détail du socle</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VI-009"><img src="https://i.postimg.cc/rm364v7D/SOLIDO-BOITE-BAOT-VI-009.jpg" alt="BAOT-VI 009 socle"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VI-010"><img src="https://i.postimg.cc/MTNkBhgM/SOLIDO-BOITE-BAOT-VI-010.jpg" alt="BAOT-VI 010"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BAOT-VII ========== -->
+        <div class="chrono-section">
+            <h2>BAOT-VII <span class="date-badge">12-1981 / X-1983</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="box-header">
+                <span class="box-title">BOÎTE AGE D'OR TYPE VII / ID : BAOT-VII</span>
+                <span class="box-dates">12-1981 / X-1983</span>
+            </div>
+            <div class="desc">
+                <p>Boîte vitrine sur socle marron, blanc ou noir. La désignation du modèle est matérialisé par un autocollant collé sur le chanfrein du socle. La vitrine est maintenue sur le socle par du ruban adhésif à chaque extrémité. D'après mes saines lectures, la MERCEDES SSKL Mille Miglia Réf. 4004 commercialisée en décembre 1982 serait le premier modèle Age d'Or à recevoir cette boîte avec un socle blanc. Malgré mes recherches, je ne la trouve qu'avec un socle marron marbré identique à celui de la MERCEDES SSKL Réf. 4001. Les socles "marron", "blanc" ou "noir" en question sont une résultante du socle 4001-601 suite à des modifications du moule. Sous le socle est, en plus de la référence du socle, des mentions supplémentaires. Sur le socle, est gravé "SOLIDO" sur le chanfrein et "Age d'or" / "SOLIDO" sur la partie plane. Par déduction, le premier modèle commercialisé en premier lieu avec cette boîte serait la DELAGE D8120 1939 capote fermée Réf. 4031. La FIAT 525 N 1929 Réf. 4154 serait le dernier modèle à recevoir cette boîte.</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VII-001"><img src="https://i.postimg.cc/cHVjCf8R/SOLIDO-BOITE-BAOT-VII-001.jpg" alt="BAOT-VII 001"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VII-002"><img src="https://i.postimg.cc/LXr75jZ3/SOLIDO-BOITE-BAOT-VII-002.jpg" alt="BAOT-VII 002"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VII-003"><img src="https://i.postimg.cc/wvSPMDs5/SOLIDO-BOITE-BAOT-VII-003.jpg" alt="BAOT-VII 003"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VII-004"><img src="https://i.postimg.cc/bJKMr12R/SOLIDO-BOITE-BAOT-VII-004.jpg" alt="BAOT-VII 004"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VII-005"><img src="https://i.postimg.cc/3RP6N2Dt/SOLIDO-BOITE-BAOT-VII-005.jpg" alt="BAOT-VII 005"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BAOT-VIII ========== -->
+        <div class="chrono-section">
+            <h2>BAOT-VIII <span class="date-badge">12-1981 / X-XXXX</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="box-header">
+                <span class="box-title">BOÎTE AGE D'OR TYPE VIII / ID : BAOT-VIII</span>
+                <span class="box-dates">12-1981 / X-XXXX</span>
+            </div>
+            <div class="desc">
+                <p>Il s'agit d'une boîte vitrine sur socle blanc creux. Ce dernier fut créé pour le CITROËN C4F 1000kg Pompiers 1930 Réf. 4403. l'assise du socle ainsi surbaissée permet de loger  le véhicule de secours surmonté de ses échelles en utilisant la même vitrine que les autres références Age d'Or. Ainsi l'encombrement des boîtes est identique ce qui permet de standardiser les cartons de regroupement pour les expéditions.</p>
+                <p>Les petits côtés de la vitrine sont dotés de lumières qui vienne s'emboîter sur le socle pourvu d'ergots. La référence du socle est 4000-401. Une variante de socle est constatée au niveau de l'ergot gauche du socle et des inscriptions gravés sous le socle.</p>
+                <p>Mon exemplaire n'étant pas dans un état concours, J'ai souhaité rendre un hommage à celui sans qui nous serions dans ce forum en présentant Le CITROËN C4F "Un Demi Siècle Solido". Monsieur AZEMA, nous vous remercions pour votre travail colossal immortalisé par vos ouvrages qui nous permettent chaque jour de parfaire nos connaissances et qui accroissent notre passion pour la marque Eurélienne.</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VIII-001"><img src="https://i.postimg.cc/5yd7b1ZP/SOLIDO-BOITE-BAOT-VIII-001.jpg" alt="BAOT-VIII 001"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VIII-002"><img src="https://i.postimg.cc/NFqJBYWd/SOLIDO-BOITE-BAOT-VIII-002.jpg" alt="BAOT-VIII 002"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VIII-003"><img src="https://i.postimg.cc/MH2Pqxhd/SOLIDO-BOITE-BAOT-VIII-003.jpg" alt="BAOT-VIII 003"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VIII-004"><img src="https://i.postimg.cc/mkfXBR0X/SOLIDO-BOITE-BAOT-VIII-004.jpg" alt="BAOT-VIII 004"></span>
+                </div>
+                <p class="legend">première version du socle</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VIII-005"><img src="https://i.postimg.cc/KvbqWG7k/SOLIDO-BOITE-BAOT-VIII-005.jpg" alt="BAOT-VIII 005 première version socle"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VIII-006"><img src="https://i.postimg.cc/GhR7fLPT/SOLIDO-BOITE-BAOT-VIII-006.jpg" alt="BAOT-VIII 006"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VIII-007"><img src="https://i.postimg.cc/7Y4sRH1T/SOLIDO-BOITE-BAOT-VIII-007.jpg" alt="BAOT-VIII 007"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VIII-008"><img src="https://i.postimg.cc/02vW4kGw/SOLIDO-BOITE-BAOT-VIII-008.jpg" alt="BAOT-VIII 008"></span>
+                </div>
+                <p class="legend">Deuxième version du socle. Vous avez remarqué que je n'ai pas écrit seconde, car il est possible qu'il existe d'autres versions que je n'ai pas identifiées.</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VIII-009"><img src="https://i.postimg.cc/Wz8MCvjn/SOLIDO-BOITE-BAOT-VIII-009.jpg" alt="BAOT-VIII 009 deuxième version socle"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-VIII-010"><img src="https://i.postimg.cc/kGsxzm9y/SOLIDO-BOITE-BAOT-VIII-010.jpg" alt="BAOT-VIII 010"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BAOT-IX ========== -->
+        <div class="chrono-section">
+            <h2>BAOT-IX <span class="date-badge">11-1982 / X-1988</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="box-header">
+                <span class="box-title">BOÎTE AGE D'OR TYPE IX / ID : BAOT-IX</span>
+                <span class="box-dates">11-1982 / X-1988</span>
+            </div>
+            <div class="desc">
+                <p>Il s'agit d'une boîte vitrine sur socle blanc. Les extrémités de la vitrine sont dotés de lumières qui viennent s'emboîter sur le socle pourvu d'ergots. La référence du socle est 4000-201. Après moultes recherches et questionnements, je situe l'arrivée de cette boîte avec la CITROËN Traction 15 CV 1939 Réf. 4032. mais je peux me tromper! Une variante de socle est constatée au niveau de l'ergot gauche du socle et des inscriptions gravés sous le socle.</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IX-001"><img src="https://i.postimg.cc/X7XG4FkL/SOLIDO-BOITE-BAOT-IX-001.jpg" alt="BAOT-IX 001"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IX-002"><img src="https://i.postimg.cc/zvGLLRZB/SOLIDO-BOITE-BAOT-IX-002.jpg" alt="BAOT-IX 002"></span>
+                </div>
+                <p class="legend">L'ergot de gauche devient fixe (voir photo de droite!)</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IX-003"><img src="https://i.postimg.cc/T13yyWM1/SOLIDO-BOITE-BAOT-IX-003.jpg" alt="BAOT-IX 003 ergot gauche fixe"></span>
+                </div>
+                <p class="legend">première version du socle</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IX-004"><img src="https://i.postimg.cc/RV3Fjmvy/SOLIDO-BOITE-BAOT-IX-004.jpg" alt="BAOT-IX 004 première version socle"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IX-005"><img src="https://i.postimg.cc/VLS63wz2/SOLIDO-BOITE-BAOT-IX-005.jpg" alt="BAOT-IX 005"></span>
+                </div>
+                <p class="legend">Deuxième version du socle. Vous avez remarqué que je n'ai pas écrit seconde, car il est possible qu'il existe d'autres versions que je n'ai pas identifiées.</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IX-006"><img src="https://i.postimg.cc/pLzdLB5v/SOLIDO-BOITE-BAOT-IX-006.jpg" alt="BAOT-IX 006 deuxième version socle"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-IX-007"><img src="https://i.postimg.cc/y8cN8T3s/SOLIDO-BOITE-BAOT-IX-007.jpg" alt="BAOT-IX 007"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BAOT-X ========== -->
+        <div class="chrono-section">
+            <h2>BAOT-X <span class="date-badge">X-1988 / X-1991</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="box-header">
+                <span class="box-title">BOÎTE AGE D'OR TYPE X / ID : BAOT-X</span>
+                <span class="box-dates">X-1988 / X-1991</span>
+            </div>
+            <div class="desc">
+                <p>Il s'agit d'une boîte vitrine sur socle noir sans étui. Les extrémités de la vitrine sont dotés de lumières qui vienne s'emboîter sur le socle pourvu d'ergots. Après moultes recherches et questionnement, je situe l'arrivée de cette boîte avec la CITROËN Traction 15 CV avec malle 1952 Réf. 4519. Lors de nos observations réciproques trouverons nous peut-être des versions différentes pour ce socle!? La réponse ne se fit attendre! Merci Eric!</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="X_id_011"><img src="https://i.servimg.com/u/f51/17/62/53/34/x_id_011.jpg" alt="BAOT-X 011"></span>
+                </div>
+            </div>
+            <div class="variant">
+                <strong>BAOT-Xa</strong><span class="variant-date">(X-1988 / X-19XX)</span>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-X-001"><img src="https://i.postimg.cc/d11vrR3M/SOLIDO-BOITE-BAOT-X-001.jpg" alt="BAOT-Xa 001"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-X-002"><img src="https://i.postimg.cc/xCCYMG8D/SOLIDO-BOITE-BAOT-X-002.jpg" alt="BAOT-Xa 002"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-X-003"><img src="https://i.postimg.cc/yddBchxC/SOLIDO-BOITE-BAOT-X-003.jpg" alt="BAOT-Xa 003"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-X-004"><img src="https://i.postimg.cc/Qtts1gCr/SOLIDO-BOITE-BAOT-X-004.jpg" alt="BAOT-Xa 004"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-X-005"><img src="https://i.postimg.cc/0QQxDGj2/SOLIDO-BOITE-BAOT-X-005.jpg" alt="BAOT-Xa 005"></span>
+                </div>
+            </div>
+            <div class="variant">
+                <strong>BAOT-Xb</strong><span class="variant-date">(X-19XX / X-1991)</span>
+                <div class="photos">
+                    <span class="photo-item" data-caption="X_id_010"><img src="https://i.servimg.com/u/f51/17/62/53/34/x_id_010.jpg" alt="BAOT-Xb 010"></span>
+                </div>
+                <p>Le dessous du socle est identique à la version BAOT-Xa</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="X_id_012"><img src="https://i.servimg.com/u/f51/17/62/53/34/x_id_012.jpg" alt="BAOT-Xb 012 dessous"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BAOT-XI ========== -->
+        <div class="chrono-section">
+            <h2>BAOT-XI <span class="date-badge">X-1991 / X-2000</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="box-header">
+                <span class="box-title">BOÎTE AGE D'OR TYPE XI / ID : BAOT-XI</span>
+                <span class="box-dates">X-1991 / X-2000</span>
+            </div>
+            <div class="desc">
+                <p>1991 est une année de transition dans l'Histoire des Age d'Or. Une scission logique fut adoptée pour répartir les modèles existants et ceux à venir, en proposant les modèles d'avant guerre d'une part et les modèles d'après guerre d'autre part. Ainsi naissent les séries : "Age d'Or" qui regroupe les série 4000-4100-4400 et "Sixties" qui reprend une partie des modèles de la série 4500 et qui accueille les nouveautés.</p>
+                <p>A partir de 1991, les socles sont toujours noirs. En 1999, les vis de fixation sont toujours noires. En 2000, les "Age d'Or" et les "Sixties", recevront un étui bleu qui sera utilisé pour l'ensemble des modèles 1/43ème. En regardant de plus près les étuis, nous constatons la présence de symboles devenus obligatoires au fil du temps. Ainsi pour des étuis qui semblent au premier regard identique, il n'en est rien sur la face du dessous. Pour simplifier la classification des différentes boîtes, nous resterons sur le premier regard pour éviter des sous classes innombrables. Cependant, la présence ou non des symboles permettent, si tant est que nous connaissons les dates d'application des loi, de dater la miniature. Si quelqu'un est intéressé pour développer ce sujet, il est le bienvenu!</p>
+                <p>En ce qui concerne le type BAOT-XI, il s'agit d'une boîte vitrine sur socle noir agrémentée d'un étui "Age d'Or". L'étui est caractérisé par un dégradé orange. Le socle est noir et dépourvu d'ergot. La désignation du modèle est imprimé en argent. La vitrine en plexiglas est simplement posée sur le socle. L'ensemble est maintenu par l'étui. Tout d'abord, il apparaît avec une grande languette pour les présentoirs des rayons de magasin. Vers 1993, la languette sera plus petite.</p>
+            </div>
+            <div class="variant">
+                <strong>BAOT-XIa</strong><span class="variant-date">(X-1991 / X-1993)</span>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIa-001"><img src="https://i.postimg.cc/YCDwkGb7/SOLIDO-BOITE-BAOT-XIa-001.jpg" alt="BAOT-XIa 001"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIa-002"><img src="https://i.postimg.cc/t4vHyZ2G/SOLIDO-BOITE-BAOT-XIa-002.jpg" alt="BAOT-XIa 002"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIa-003"><img src="https://i.postimg.cc/T3NXGLCM/SOLIDO-BOITE-BAOT-XIa-003.jpg" alt="BAOT-XIa 003"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIa-004"><img src="https://i.postimg.cc/x1pSYJtr/SOLIDO-BOITE-BAOT-XIa-004.jpg" alt="BAOT-XIa 004"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIa-005"><img src="https://i.postimg.cc/bwVj8D3q/SOLIDO-BOITE-BAOT-XIa-005.jpg" alt="BAOT-XIa 005"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIa-006"><img src="https://i.postimg.cc/7ZtyDGmw/SOLIDO-BOITE-BAOT-XIa-006.jpg" alt="BAOT-XIa 006"></span>
+                </div>
+                <p>Un autocollant matérialise le symbole de recyclage. Il est étonnement écrit en Allemand, peut-être pour un besoin à l'exportation.</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIa-007"><img src="https://i.postimg.cc/7hkFXgYS/SOLIDO-BOITE-BAOT-XIa-007.jpg" alt="BAOT-XIa 007"></span>
+                </div>
+                <p>"Le point vert" représenté en noir et blanc!</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIa-008"><img src="https://i.postimg.cc/dtqMymx4/SOLIDO-BOITE-BAOT-XIa-008.jpg" alt="BAOT-XIa 008"></span>
+                </div>
+                <p>Détail de la date de création de l'étui</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIa-009"><img src="https://i.postimg.cc/LsgGpyJD/SOLIDO-BOITE-BAOT-XIa-009.jpg" alt="BAOT-XIa 009"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIa-010"><img src="https://i.postimg.cc/0QgF2pSw/SOLIDO-BOITE-BAOT-XIa-010.jpg" alt="BAOT-XIa 010"></span>
+                </div>
+                <p>Voici un exemple de différence de symboles imprimés parmi tant d'autres pour le type BAOT-XIb.</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIa-012"><img src="https://i.postimg.cc/Xq4P94Q2/SOLIDO-BOITE-BAOT-XIa-012.jpg" alt="BAOT-XIa 012"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIa-013"><img src="https://i.postimg.cc/gjm73mNS/SOLIDO-BOITE-BAOT-XIa-013.jpg" alt="BAOT-XIa 013"></span>
+                </div>
+            </div>
+            <div class="variant">
+                <strong>BAOT-XIb</strong><span class="variant-date">(X-1993 / X-2000)</span>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIb-001"><img src="https://i.postimg.cc/0yFHcpVM/SOLIDO-BOITE-BAOT-XIb-001.jpg" alt="BAOT-XIb 001"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIb-002"><img src="https://i.postimg.cc/bwWF3QmG/SOLIDO-BOITE-BAOT-XIb-002.jpg" alt="BAOT-XIb 002"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIb-003"><img src="https://i.postimg.cc/qvSZj81N/SOLIDO-BOITE-BAOT-XIb-003.jpg" alt="BAOT-XIb 003"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIb-005"><img src="https://i.postimg.cc/ht63p92Q/SOLIDO-BOITE-BAOT-XIb-005.jpg" alt="BAOT-XIb 005"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIb-006"><img src="https://i.postimg.cc/zG6P0nxg/SOLIDO-BOITE-BAOT-XIb-006.jpg" alt="BAOT-XIb 006"></span>
+                </div>
+                <p>Voici un exemple de différence de symboles imprimés parmi tant d'autres pour le type BAOT-XIb.</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIb-007"><img src="https://i.postimg.cc/j2x8LvS9/SOLIDO-BOITE-BAOT-XIb-007.jpg" alt="BAOT-XIb 007"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIb-008"><img src="https://i.postimg.cc/tJqrYD4w/SOLIDO-BOITE-BAOT-XIb-008.jpg" alt="BAOT-XIb 008"></span>
+                </div>
+                <p>Un résumé non exhaustif des symboles représentés sur les fonds des boîtes. Les étuis à grande languette sont à gauche sur la photo.</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIb-010"><img src="https://i.postimg.cc/65QjKHSN/SOLIDO-BOITE-BAOT-XIb-010.jpg" alt="BAOT-XIb 010 symboles"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BAOT-XII ========== -->
+        <div class="chrono-section">
+            <h2>BAOT-XII <span class="date-badge">X-1991 / X-2000</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="box-header">
+                <span class="box-title">BOÎTE AGE D'OR TYPE XII / ID : BAOT-XII</span>
+                <span class="box-dates">X-1991 / X-2000</span>
+            </div>
+            <div class="desc">
+                <p>Il s'agit d'une boîte vitrine sur socle noir agrémentée d'un étui "Sixties". L'étui est caractérisé par un dégradé rose. Le socle est noir et dépourvu d'ergot. La désignation du modèle est imprimé en argent. La vitrine en plexiglas est simplement posée sur le socle. L'ensemble est maintenu par l'étui. Il existe deux versions d'étui. Comme pour l'étui BAOT-XI, il apparaît avec une grande languette pour les présentoirs des rayons de magasin. Vers 1993, la languette sera plus petite.</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XII-001"><img src="https://i.postimg.cc/d3hyHTHw/SOLIDO-BOITE-BAOT-XII-001.jpg" alt="BAOT-XII 001"></span>
+                </div>
+            </div>
+            <div class="variant">
+                <strong>BAOT-XIIa</strong><span class="variant-date">(X-1991 / X-1993)</span>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIIa-001"><img src="https://i.postimg.cc/hvXdy7yK/SOLIDO-BOITE-BAOT-XIIa-001.jpg" alt="BAOT-XIIa 001"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIIa-002"><img src="https://i.postimg.cc/nrXDRQRx/SOLIDO-BOITE-BAOT-XIIa-002.jpg" alt="BAOT-XIIa 002"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIIa-003"><img src="https://i.postimg.cc/MHnQPjPx/SOLIDO-BOITE-BAOT-XIIa-003.jpg" alt="BAOT-XIIa 003"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIIa-004"><img src="https://i.postimg.cc/mkPHXFX2/SOLIDO-BOITE-BAOT-XIIa-004.jpg" alt="BAOT-XIIa 004"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIIa-005"><img src="https://i.postimg.cc/tJsxSVS4/SOLIDO-BOITE-BAOT-XIIa-005.jpg" alt="BAOT-XIIa 005"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIIa-006"><img src="https://i.postimg.cc/PJCw383q/SOLIDO-BOITE-BAOT-XIIa-006.jpg" alt="BAOT-XIIa 006"></span>
+                </div>
+            </div>
+            <div class="variant">
+                <strong>BAOT-XIIb</strong><span class="variant-date">(X-1993 / X-2000)</span>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIIb-001"><img src="https://i.postimg.cc/sXNBhgV6/SOLIDO-BOITE-BAOT-XIIb-001.jpg" alt="BAOT-XIIb 001"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIIb-002"><img src="https://i.postimg.cc/sXNBhgVn/SOLIDO-BOITE-BAOT-XIIb-002.jpg" alt="BAOT-XIIb 002"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIIb-004"><img src="https://i.postimg.cc/DZMWXw2p/SOLIDO-BOITE-BAOT-XIIb-004.jpg" alt="BAOT-XIIb 004"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIIb-005"><img src="https://i.postimg.cc/fLr39Rw8/SOLIDO-BOITE-BAOT-XIIb-005.jpg" alt="BAOT-XIIb 005"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIIb-006"><img src="https://i.postimg.cc/63m7vp9m/SOLIDO-BOITE-BAOT-XIIb-006.jpg" alt="BAOT-XIIb 006"></span>
+                </div>
+            </div>
+            <p>Notons que les diversités des symboles représentés sur les fonds des boîtes de type BAOT-XII sont les mêmes que les boîtes de type BAOT-XI.</p>
+            <div class="photos">
+                <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIIb-007"><img src="https://i.postimg.cc/05znH6J8/SOLIDO-BOITE-BAOT-XIIb-007.jpg" alt="BAOT-XIIb 007"></span>
+                <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIIb-008"><img src="https://i.postimg.cc/wx12btsg/SOLIDO-BOITE-BAOT-XIIb-008.jpg" alt="BAOT-XIIb 008"></span>
+            </div>
+        </div>
+
+        <!-- ========== BAOT-XIII ========== -->
+        <div class="chrono-section">
+            <h2>BAOT-XIII <span class="date-badge">X-2000 / X-XXXX</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="box-header">
+                <span class="box-title">BOÎTE AGE D'OR TYPE XIII / ID : BAOT-XIII</span>
+                <span class="box-dates">X-2000 / X-XXXX</span>
+            </div>
+            <div class="desc">
+                <p>Il s'agit d'une boîte vitrine sur socle noir agrémentée d'un étui bleu commun à tous les modèles. Le socle est noir et dépourvu d'ergot. La gamme "Age d'Or" est précisée sur un carton imprimé a l'intérieur de la boîte. La désignation du modèle est imprimé en argent. La vitrine en plexiglas est simplement posée sur le socle. L'ensemble est maintenu par l'étui.</p>
+                <div class="photos">
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIII-001"><img src="https://i.postimg.cc/5yd7b1ZP/SOLIDO-BOITE-BAOT-XIII-001.jpg" alt="BAOT-XIII 001"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIII-002"><img src="https://i.postimg.cc/NFqJBYWd/SOLIDO-BOITE-BAOT-XIII-002.jpg" alt="BAOT-XIII 002"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIII-003"><img src="https://i.postimg.cc/MH2Pqxhd/SOLIDO-BOITE-BAOT-XIII-003.jpg" alt="BAOT-XIII 003"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIII-004"><img src="https://i.postimg.cc/mkfXBR0X/SOLIDO-BOITE-BAOT-XIII-004.jpg" alt="BAOT-XIII 004"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIII-005"><img src="https://i.postimg.cc/KvbqWG7k/SOLIDO-BOITE-BAOT-XIII-005.jpg" alt="BAOT-XIII 005"></span>
+                    <span class="photo-item" data-caption="SOLIDO-BOITE-BAOT-XIII-006"><img src="https://i.postimg.cc/GhR7fLPT/SOLIDO-BOITE-BAOT-XIII-006.jpg" alt="BAOT-XIII 006"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footnote">
+            <p>Document généré à partir des fichiers d'étude fournis. Les dates sont données à titre indicatif et peuvent être approximatives. Pour toute suggestion ou information complémentaire, se référer au forum <em>Le Gourbi Solido</em>.</p>
+            <p style="text-align:right; font-size:0.8rem;">(mise à jour le 23/06/2023)</p>
+        </div>
+    </div>
+
+    <!-- ====== DIAPORAMA ====== -->
+    <div class="lightbox" id="lightbox">
+        <button class="close-btn" id="lightbox-close" aria-label="Fermer">✕</button>
+        <div class="lightbox-stage">
+            <div class="lightbox-img-wrap">
+                <button class="nav-btn prev" id="lightbox-prev" aria-label="Précédent">‹</button>
+                <img class="main-img" src="" alt="Photo agrandie" id="lightbox-img">
+                <button class="nav-btn next" id="lightbox-next" aria-label="Suivant">›</button>
+            </div>
+            <div class="counter" id="lightbox-counter">1 / 1</div>
+            <div class="caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const counter = document.getElementById('lightbox-counter');
+            const caption = document.getElementById('lightbox-caption');
+            const prevBtn = document.getElementById('lightbox-prev');
+            const nextBtn = document.getElementById('lightbox-next');
+            const closeBtn = document.getElementById('lightbox-close');
+
+            let currentSeries = [];
+            let currentIndex = 0;
+
+            function openSlideshow(photoItem) {
+                const gallery = photoItem.closest('.photos');
+                if (!gallery) return;
+
+                currentSeries = Array.from(gallery.querySelectorAll('.photo-item')).map(el => ({
+                    src: el.querySelector('img').src,
+                    caption: el.dataset.caption || ''
+                }));
+
+                currentIndex = Array.from(gallery.querySelectorAll('.photo-item')).indexOf(photoItem);
+                if (currentIndex < 0) currentIndex = 0;
+
+                renderSlide();
+                lightbox.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function renderSlide() {
+                if (!currentSeries.length) return;
+                const item = currentSeries[currentIndex];
+                lightboxImg.src = item.src;
+                lightboxImg.alt = item.caption || 'Photo';
+                caption.textContent = item.caption;
+                counter.textContent = (currentIndex + 1) + ' / ' + currentSeries.length;
+
+                const onlyOne = currentSeries.length <= 1;
+                prevBtn.disabled = onlyOne;
+                nextBtn.disabled = onlyOne;
+            }
+
+            function goPrev() {
+                if (currentSeries.length <= 1) return;
+                currentIndex = (currentIndex - 1 + currentSeries.length) % currentSeries.length;
+                renderSlide();
+            }
+            function goNext() {
+                if (currentSeries.length <= 1) return;
+                currentIndex = (currentIndex + 1) % currentSeries.length;
+                renderSlide();
+            }
+
+            function closeSlideshow() {
+                lightbox.classList.remove('open');
+                document.body.style.overflow = '';
+                lightboxImg.src = '';
+                currentSeries = [];
+                currentIndex = 0;
+            }
+
+            document.querySelectorAll('.photo-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openSlideshow(this);
+                });
+            });
+
+            prevBtn.addEventListener('click', function(e) { e.stopPropagation(); goPrev(); });
+            nextBtn.addEventListener('click', function(e) { e.stopPropagation(); goNext(); });
+            closeBtn.addEventListener('click', closeSlideshow);
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) closeSlideshow();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('open')) return;
+                if (e.key === 'Escape') closeSlideshow();
+                else if (e.key === 'ArrowLeft') goPrev();
+                else if (e.key === 'ArrowRight') goNext();
+            });
+        })();
+    </script>
+</body>
+</html>
