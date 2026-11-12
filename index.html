@@ -40,7 +40,7 @@
         }
         iframe {
             width: 100%;
-            height: calc(100vh - 75px); /* Prend toute la hauteur restante de l'écran */
+            height: calc(100vh - 75px);
             border: none;
             display: block;
         }
@@ -51,25 +51,19 @@
     <div class="menu-bar">
         <label for="studySelector">📚 Choisissez une étude :</label>
         <select id="studySelector" onchange="changeStudy()">
-            <!-- C'EST ICI QUE VOUS AJOUTEREZ VOS ÉTUDES -->
-            <!-- <option value="4156_duesenberg.html">Réf. 4156 - Duesenberg J</option> -->
-            <!-- <option value="4046_rolls.html">Réf. 4046 - Rolls Royce Phantom III</option> -->
+            <!-- On ne met que le fichier qui existe réellement -->
             <option value="46_ROLLS-ROYCE-PHANTOM-III.html">Réf. 46 - Rolls Royce Phantom III</option>
         </select>
     </div>
 
-    <!-- Par défaut, on affiche la première étude de la liste -->
-    <iframe id="studyFrame" src="4156_duesenberg.html"></iframe>
+    <!-- On met le bon nom de fichier ici aussi -->
+    <iframe id="studyFrame" src="46_ROLLS-ROYCE-PHANTOM-III.html"></iframe>
 
     <script>
         function changeStudy() {
             var selector = document.getElementById("studySelector");
             var iframe = document.getElementById("studyFrame");
-            
-            // On récupère le nom du fichier choisi et on le met dans l'iframe
             iframe.src = selector.value;
-            
-            // On remonte en haut de la page (utile si la souris est restée en bas)
             window.scrollTo(0, 0);
         }
     </script>
