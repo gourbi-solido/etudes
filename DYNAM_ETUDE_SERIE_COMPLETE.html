@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Étude Solido Série Dynam</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f5f2eb;
+            color: #2e2b28;
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #fffdf9;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-radius: 24px;
+            padding: 2rem 2rem 3rem;
+            border: 1px solid #e2d9cf;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-top: 0;
+            margin-bottom: 0.4rem;
+            color: #3b2e24;
+            border-bottom: 3px solid #d4b68a;
+            padding-bottom: 0.6rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: #6d5d4e;
+            margin-bottom: 2rem;
+            font-style: italic;
+            background: #faf3e8;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            display: inline-block;
+        }
+        .intro-text {
+            background: #f9f1e6;
+            border-left: 6px solid #b58b5c;
+            padding: 1.2rem 1.5rem;
+            border-radius: 12px;
+            margin: 1.8rem 0 2.2rem;
+            font-size: 0.95rem;
+            color: #3d3228;
+        }
+        .intro-text p { margin: 0.4rem 0; }
+        .chrono-section {
+            margin: 2.8rem 0 1.5rem;
+            position: relative;
+        }
+        .chrono-section h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #5a3e2b;
+            margin: 0 0 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .chrono-section h2 .date-badge {
+            background: #bfa27a;
+            color: #fffdf9;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
+        }
+        .box-card {
+            background: #ffffff;
+            border: 1px solid #e6ddd3;
+            border-radius: 20px;
+            padding: 1.6rem 1.8rem;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            transition: border-color 0.15s;
+        }
+        .box-card:hover { border-color: #cbb295; }
+        .box-dates {
+            font-size: 0.9rem;
+            color: #7a6857;
+            background: #fcf7f0;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+            border: 1px solid #e9dacc;
+        }
+        .variant {
+            margin: 1.4rem 0 0.8rem;
+            padding-left: 0.9rem;
+            border-left: 3px solid #cbb295;
+        }
+        .variant-date {
+            font-size: 0.85rem;
+            color: #8b7a69;
+            font-weight: 500;
+            margin-left: 0.6rem;
+        }
+        .desc {
+            margin: 0.5rem 0 1rem;
+            font-size: 0.98rem;
+            color: #2e2b28;
+        }
+        .desc p { margin: 0.4rem 0; }
+        .desc ul {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .desc li { margin-bottom: 0.3rem; }
+        
+        .variant-block {
+            margin-top: 0;
+        }
+        .variant-block:not(:first-child) {
+            margin-top: 2rem;
+        }
+
+        /* ====== GALERIE PHOTOS AVEC ZOOM ====== */
+        .photos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 1rem 0 0.6rem;
+        }
+        .photos .photo-item {
+            display: inline-block;
+            border-radius: 10px;
+            cursor: pointer;
+            line-height: 0;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1),
+                        box-shadow 0.3s ease,
+                        z-index 0s;
+        }
+        .photos .photo-item img {
+            display: block;
+            width: 160px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #e0d4c6;
+            background: #f8f4ef;
+            transition: border-color 0.3s ease, filter 0.3s ease;
+        }
+        .photos .photo-item:hover {
+            transform: scale(1.9);
+            transform-origin: center center;
+            z-index: 9999;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+        }
+        .photos .photo-item:hover img {
+            border-color: #b58b5c;
+            filter: brightness(1.05);
+        }
+        .box-card, .variant, .desc { overflow: visible; }
+
+        /* ====== DIAPORAMA ====== */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 10, 5, 0.93);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            animation: fadeIn 0.2s ease;
+        }
+        .lightbox.open { display: flex; }
+
+        .lightbox-stage {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 92vw;
+        }
+        
+        .lightbox-img-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox img.main-img {
+            max-width: 88vw;
+            max-height: 82vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+            animation: zoomIn 0.25s ease;
+            background: #2a231c;
+            display: block;
+        }
+
+        .lightbox .close-btn {
+            position: fixed;
+            top: 1.2rem;
+            right: 1.6rem;
+            font-size: 1.6rem;
+            color: #fff;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: background 0.15s;
+            z-index: 100005;
+        }
+        .lightbox .close-btn:hover { background: rgba(255,255,255,0.35); }
+
+        .lightbox .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2.4rem;
+            font-weight: 300;
+            color: #fff;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: background 0.15s, transform 0.15s;
+            z-index: 100010;
+            user-select: none;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .lightbox .nav-btn:hover { background: rgba(255,255,255,0.4); color: #000; }
+        .lightbox .nav-btn:active { transform: translateY(-50%) scale(0.94); }
+        .lightbox .nav-btn.prev { left: 10px; }
+        .lightbox .nav-btn.next { right: 10px; }
+        .lightbox .nav-btn[disabled] { opacity: 0.2; cursor: default; background: rgba(0,0,0,0.3); border-color: transparent; }
+
+        .lightbox .counter {
+            margin-top: 1rem;
+            color: #f0e6da;
+            font-size: 0.95rem;
+            font-weight: 500;
+            background: rgba(0,0,0,0.45);
+            padding: 0.35rem 1.1rem;
+            border-radius: 30px;
+            letter-spacing: 0.4px;
+        }
+        .lightbox .caption {
+            margin-top: 0.4rem;
+            color: #cbb295;
+            font-size: 0.82rem;
+            font-family: 'Courier New', monospace;
+            max-width: 70vw;
+            text-align: center;
+            word-break: break-all;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .footnote {
+            font-size: 0.85rem;
+            margin-top: 1.2rem;
+            color: #6d5d4e;
+            border-top: 1px solid #e6ddd3;
+            padding-top: 0.8rem;
+        }
+        
+        @media (max-width: 600px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.7rem; }
+            .photos .photo-item img { width: 120px; height: 90px; }
+            .photos .photo-item:hover { transform: scale(3); }
+            .lightbox .nav-btn { width: 46px; height: 46px; font-size: 1.8rem; left: 5px; right: 5px; }
+            .lightbox img.main-img { max-width: 95vw; max-height: 76vh; }
+        }
+
+        /* ====== TABLEAU ====== */
+        .table-container {
+            overflow-x: auto;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        .custom-table {
+            border-collapse: collapse;
+            width: 100%;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            min-width: 800px;
+            border: 1px solid #a0a0a0;
+        }
+        .custom-table th, 
+        .custom-table td {
+            border: 1px solid #a0a0a0;
+            padding: 6px 8px;
+            vertical-align: middle;
+        }
+        .custom-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .bg-yellow { background-color: #ffffb3; }
+        .center { text-align: center; }
+        .bold { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Étude Solido Série Dynam</h1>
+        <div class="subhead">Liste des modèles de la gamme économique — mise à jour novembre 2026</div>
+
+        <div class="intro-text">
+            <p>La série <strong>Dynam</strong> était une gamme économique produite par Solido. Les modèles de cette série se distinguent par des moules souvent simplifiés, une peinture satinée et un marquage spécifique "Dynam" sur le châssis. Ils sont aujourd'hui très rares et prisés des collectionneurs.</p>
+            <p>Source : <i>Le Gourbi Solido</i> (forum de collectionneurs) - Sujets détaillés par erbo62.</p>
+            <p><strong>🔍 Astuce :</strong> survolez une photo pour un zoom, cliquez pour ouvrir le diaporama de la série.</p>
+        </div>
+
+        <!-- ========== TABLEAU RÉCAPITULATIF ========== -->
+        <div class="table-container">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th style="width: 8%;">Réf.</th>
+                        <th style="width: 45%;">Modèle</th>
+                        <th style="width: 15%;">Coloris connus</th>
+                        <th style="width: 32%;">Particularités techniques</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="bg-yellow center bold">10</td>
+                        <td class="bg-yellow bold">Harvey Indy</td>
+                        <td class="bg-yellow center">Jaune</td>
+                        <td class="bg-yellow">Jantes Carabo Bertone, suppression arceau, trou sous partie arrière.</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-yellow center bold">11</td>
+                        <td class="bg-yellow bold">Fiat Abarth Record</td>
+                        <td class="bg-yellow center">Rouge, Blanc/Rouge, Rouge/Blanc</td>
+                        <td class="bg-yellow">Conserve les jantes "standard", sans suspensions.</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-yellow center bold">12</td>
+                        <td class="bg-yellow bold">Alpine Formule 3</td>
+                        <td class="bg-yellow center">Bleu France vif</td>
+                        <td class="bg-yellow">Jantes Carabo, suppression arceau, voies élargies, pilote casque vert.</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-yellow center bold">13</td>
+                        <td class="bg-yellow bold">NSU Prinz IV</td>
+                        <td class="bg-yellow center">Jaune d'or</td>
+                        <td class="bg-yellow">Passages de roue modifiés, jantes Carabo, aménagement noir, sans suspensions.</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-yellow center bold">14</td>
+                        <td class="bg-yellow bold">Abarth 1000</td>
+                        <td class="bg-yellow center">Rouge</td>
+                        <td class="bg-yellow">Passages de roue modifiés, jantes Carabo, aménagement noir, sans suspensions.</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-yellow center bold">15</td>
+                        <td class="bg-yellow bold">Porsche GT Le Mans</td>
+                        <td class="bg-yellow center">Bleu clair</td>
+                        <td class="bg-yellow">Passages de roue modifiés, jantes Carabo, aménagement rouge, sans suspensions.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- ========== FIN DU TABLEAU ========== -->
+
+        <!-- ========== SECTION MODÈLES ========== -->
+        <div class="chrono-section">
+            <h2>Fiches détaillées<span class="date-badge">Série Dynam</span></h2>
+        </div>
+        
+        <div class="box-card">
+            <!-- Réf 10 -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. 10</strong> <span class="box-dates">Harvey Indy</span> 
+                <strong style="font-size: 1.1rem; color: #4e3826; margin-left: 15px;">Coloris : Jaune</strong>
+                <div class="desc">
+                    <p>Adoption des jantes de la Carabo Bertone. Suppression de l'arceau de sécurité, quelques inscriptions ont été modifiées ou effacées sous le châssis et création d'un trou sous la partie arrière, certainement pour la mise en peinture sur des balancelles.</p>
+                    <p>Pour une fois, présentation d'un blister Dynam, un conditionnement vraiment pas courant !</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="hdy_0110.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/hdy_0110.jpg" alt="Harvey Indy 1"></span>
+                        <span class="photo-item" data-caption="hdy_0210.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/hdy_0210.jpg" alt="Harvey Indy 2"></span>
+                        <span class="photo-item" data-caption="hdy_0310.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/hdy_0310.jpg" alt="Harvey Indy 3"></span>
+                        <span class="photo-item" data-caption="hdy_0410.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/hdy_0410.jpg" alt="Harvey Indy 4"></span>
+                        <span class="photo-item" data-caption="hdy_0510.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/hdy_0510.jpg" alt="Harvey Indy 5"></span>
+                        <span class="photo-item" data-caption="hdy_0610.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/hdy_0610.jpg" alt="Harvey Indy 6"></span>
+                        <span class="photo-item" data-caption="hdy_0710.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/hdy_0710.jpg" alt="Harvey Indy 7"></span>
+                        <span class="photo-item" data-caption="hdy_0810.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/hdy_0810.jpg" alt="Harvey Indy 8"></span>
+                        <span class="photo-item" data-caption="hdy_0910.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/hdy_0910.jpg" alt="Harvey Indy 9"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Réf 11 -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. 11</strong> <span class="box-dates">Fiat Abarth Record</span> 
+                <strong style="font-size: 1.1rem; color: #4e3826; margin-left: 15px;">Coloris : Rouge, Rouge/Blanc, Blanc/Rouge</strong>
+                <div class="desc">
+                    <p>Entièrement rouge, rouge avec cockpit blanc, blanc avec cockpit rouge.</p>
+                    <p>La seule Dynam à conserver les jantes "standard". Version sans suspensions, quelques inscriptions ont été modifiées ou effacées sous le châssis.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="far_0110.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/far_0110.jpg" alt="Fiat Abarth Record 1"></span>
+                        <span class="photo-item" data-caption="far_0210.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/far_0210.jpg" alt="Fiat Abarth Record 2"></span>
+                        <span class="photo-item" data-caption="far_0310.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/far_0310.jpg" alt="Fiat Abarth Record 3"></span>
+                        <span class="photo-item" data-caption="far_0410.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/far_0410.jpg" alt="Fiat Abarth Record 4"></span>
+                        <span class="photo-item" data-caption="far_0510.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/far_0510.jpg" alt="Fiat Abarth Record 5"></span>
+                        <span class="photo-item" data-caption="far_0610.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/far_0610.jpg" alt="Fiat Abarth Record 6"></span>
+                        <span class="photo-item" data-caption="far_0710.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/far_0710.jpg" alt="Fiat Abarth Record 7"></span>
+                        <span class="photo-item" data-caption="far_0810.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/far_0810.jpg" alt="Fiat Abarth Record 8"></span>
+                        <span class="photo-item" data-caption="far_0910.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/far_0910.jpg" alt="Fiat Abarth Record 9"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Réf 12 -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. 12</strong> <span class="box-dates">Alpine Formule 3</span> 
+                <strong style="font-size: 1.1rem; color: #4e3826; margin-left: 15px;">Coloris : Bleu France vif</strong>
+                <div class="desc">
+                    <p>Comparée à la référence 142 de base, la petite Alpine a reçu quelques modifications :</p>
+                    <ul>
+                        <li>Un bleu France plus vif</li>
+                        <li>Suppression de l'arceau de sécurité</li>
+                        <li>Élargissement des voies avant et arrière</li>
+                        <li>Utilisation des roues de la Carabo Bertone</li>
+                        <li>Création d'un petit orifice sous l'avant du châssis</li>
+                        <li>Modification de quelques inscriptions sous le châssis</li>
+                        <li>Même pilote que sur la référence 142 mais à casque vert</li>
+                    </ul>
+                    <p><em>Note : Manque un morceau de l’échappement sur cet exemplaire.</em></p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="al3_0710.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/al3_0710.jpg" alt="Alpine F3 1"></span>
+                        <span class="photo-item" data-caption="al3_0810.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/al3_0810.jpg" alt="Alpine F3 2"></span>
+                        <span class="photo-item" data-caption="al3_0910.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/al3_0910.jpg" alt="Alpine F3 3"></span>
+                        <span class="photo-item" data-caption="al3_1010.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/al3_1010.jpg" alt="Alpine F3 4"></span>
+                        <span class="photo-item" data-caption="al3_1110.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/al3_1110.jpg" alt="Alpine F3 5"></span>
+                        <span class="photo-item" data-caption="al3_1211.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/al3_1211.jpg" alt="Alpine F3 6"></span>
+                        <span class="photo-item" data-caption="al3_1310.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/al3_1310.jpg" alt="Alpine F3 7"></span>
+                        <span class="photo-item" data-caption="al3_1410.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/al3_1410.jpg" alt="Alpine F3 8"></span>
+                        <span class="photo-item" data-caption="al3_1510.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/al3_1510.jpg" alt="Alpine F3 9"></span>
+                    </div>
+                    <p style="margin-top: 1.5rem;">Cette Dynam fera une dernière apparition en 1996 dans la série "Nostalgia" 1100. L'arceau de sécurité fera son retour ainsi que les jantes d'origine :</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="al3_1910.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/al3_1910.jpg" alt="Nostalgia 1100"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Réf 13 -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. 13</strong> <span class="box-dates">NSU Prinz IV</span> 
+                <strong style="font-size: 1.1rem; color: #4e3826; margin-left: 15px;">Coloris : Jaune d'or</strong>
+                <div class="desc">
+                    <p>Un seul coloris : jaune d'or.</p>
+                    <p>Les passages de roue sont modifiés pour adopter les pneus et jantes de la Carabo Bertone. Plus de suspensions, l'aménagement est noir, quelques inscriptions ont été modifiées ou effacées sous le châssis.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="nsd_0110.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/nsd_0110.jpg" alt="NSU Prinz IV 1"></span>
+                        <span class="photo-item" data-caption="nsd_0210.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/nsd_0210.jpg" alt="NSU Prinz IV 2"></span>
+                        <span class="photo-item" data-caption="nsd_0310.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/nsd_0310.jpg" alt="NSU Prinz IV 3"></span>
+                        <span class="photo-item" data-caption="nsd_0410.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/nsd_0410.jpg" alt="NSU Prinz IV 4"></span>
+                        <span class="photo-item" data-caption="nsd_0510.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/nsd_0510.jpg" alt="NSU Prinz IV 5"></span>
+                        <span class="photo-item" data-caption="nsd_0610.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/nsd_0610.jpg" alt="NSU Prinz IV 6"></span>
+                        <span class="photo-item" data-caption="nsd_0710.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/nsd_0710.jpg" alt="NSU Prinz IV 7"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Réf 14 -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. 14</strong> <span class="box-dates">Abarth 1000</span> 
+                <strong style="font-size: 1.1rem; color: #4e3826; margin-left: 15px;">Coloris : Rouge</strong>
+                <div class="desc">
+                    <p>Coloris unique : rouge.</p>
+                    <p>Les passages de roue sont modifiés pour adopter les pneus et jantes de la Carabo Bertone. Plus de suspensions, l'aménagement est noir, quelques inscriptions ont été modifiées ou effacées sous le châssis.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="s1a_0110.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/s1a_0110.jpg" alt="Abarth 1000 1"></span>
+                        <span class="photo-item" data-caption="s1a_0210.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/s1a_0210.jpg" alt="Abarth 1000 2"></span>
+                        <span class="photo-item" data-caption="s1a_0310.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/s1a_0310.jpg" alt="Abarth 1000 3"></span>
+                        <span class="photo-item" data-caption="s1a_0410.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/s1a_0410.jpg" alt="Abarth 1000 4"></span>
+                        <span class="photo-item" data-caption="s1a_0510.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/s1a_0510.jpg" alt="Abarth 1000 5"></span>
+                        <span class="photo-item" data-caption="s1a_0610.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/s1a_0610.jpg" alt="Abarth 1000 6"></span>
+                        <span class="photo-item" data-caption="s1a_0711.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/s1a_0711.jpg" alt="Abarth 1000 7"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Réf 15 -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. 15</strong> <span class="box-dates">Porsche GT Le Mans</span> 
+                <strong style="font-size: 1.1rem; color: #4e3826; margin-left: 15px;">Coloris : Bleu clair</strong>
+                <div class="desc">
+                    <p>La petite dernière de la série...</p>
+                    <p>Coloris unique : bleu clair. Les passages de roue sont modifiés pour adopter les pneus et jantes de la Carabo Bertone. Plus de suspensions, l'aménagement est rouge, quelques inscriptions ont été modifiées ou effacées sous le châssis.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="pdy_0110.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/pdy_0110.jpg" alt="Porsche GT 1"></span>
+                        <span class="photo-item" data-caption="pdy_0210.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/pdy_0210.jpg" alt="Porsche GT 2"></span>
+                        <span class="photo-item" data-caption="pdy_0310.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/pdy_0310.jpg" alt="Porsche GT 3"></span>
+                        <span class="photo-item" data-caption="pdy_0410.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/pdy_0410.jpg" alt="Porsche GT 4"></span>
+                        <span class="photo-item" data-caption="pdy_0510.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/pdy_0510.jpg" alt="Porsche GT 5"></span>
+                        <span class="photo-item" data-caption="pdy_0610.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/pdy_0610.jpg" alt="Porsche GT 6"></span>
+                        <span class="photo-item" data-caption="pdy_0710.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/pdy_0710.jpg" alt="Porsche GT 7"></span>
+                        <span class="photo-item" data-caption="pdy_0810.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/pdy_0810.jpg" alt="Porsche GT 8"></span>
+                        <span class="photo-item" data-caption="pdy_0910.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/pdy_0910.jpg" alt="Porsche GT 9"></span>
+                    </div>
+                    <p style="margin-top: 1.5rem;">Une carrosserie brute non utilisée :</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="pdy_1010.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/pdy_1010.jpg" alt="Porsche GT brute 1"></span>
+                        <span class="photo-item" data-caption="pdy_1110.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/pdy_1110.jpg" alt="Porsche GT brute 2"></span>
+                        <span class="photo-item" data-caption="pdy_1210.jpg"><img src="https://i.servimg.com/u/f51/17/62/53/34/pdy_1210.jpg" alt="Porsche GT brute 3"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footnote">
+            <p>Document généré à partir des recherches et compilations des membres du forum <a href="https://le-gourbi-solido.forumactif.com/f180-solido-serie-dynam" target="_blank" rel="noopener noreferrer"><em>Le Gourbi Solido</em></a> (textes et photographies issues des sujets de erbo62).</p>
+            <p style="text-align:right; font-size:0.8rem;">(mise à jour le 13/11/2026)</p>
+        </div>
+    </div>
+
+    <!-- ====== DIAPORAMA ====== -->
+    <div class="lightbox" id="lightbox">
+        <button class="close-btn" id="lightbox-close" aria-label="Fermer">✕</button>
+        <div class="lightbox-stage">
+            <div class="lightbox-img-wrap">
+                <button class="nav-btn prev" id="lightbox-prev" aria-label="Précédent">‹</button>
+                <img class="main-img" src="" alt="Photo agrandie" id="lightbox-img">
+                <button class="nav-btn next" id="lightbox-next" aria-label="Suivant">›</button>
+            </div>
+            <div class="counter" id="lightbox-counter">1 / 1</div>
+            <div class="caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const counter = document.getElementById('lightbox-counter');
+            const caption = document.getElementById('lightbox-caption');
+            const prevBtn = document.getElementById('lightbox-prev');
+            const nextBtn = document.getElementById('lightbox-next');
+            const closeBtn = document.getElementById('lightbox-close');
+
+            let currentSeries = [];
+            let currentIndex = 0;
+
+            function openSlideshow(photoItem) {
+                const gallery = photoItem.closest('.photos');
+                if (!gallery) return;
+
+                currentSeries = Array.from(gallery.querySelectorAll('.photo-item')).map(el => ({
+                    src: el.querySelector('img').src,
+                    caption: el.dataset.caption || ''
+                }));
+
+                currentIndex = Array.from(gallery.querySelectorAll('.photo-item')).indexOf(photoItem);
+                if (currentIndex < 0) currentIndex = 0;
+
+                renderSlide();
+                lightbox.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function renderSlide() {
+                if (!currentSeries.length) return;
+                const item = currentSeries[currentIndex];
+                lightboxImg.src = item.src;
+                lightboxImg.alt = item.caption || 'Photo';
+                caption.textContent = item.caption;
+                counter.textContent = (currentIndex + 1) + ' / ' + currentSeries.length;
+
+                const onlyOne = currentSeries.length <= 1;
+                prevBtn.disabled = onlyOne;
+                nextBtn.disabled = onlyOne;
+            }
+
+            function goPrev() {
+                if (currentSeries.length <= 1) return;
+                currentIndex = (currentIndex - 1 + currentSeries.length) % currentSeries.length;
+                renderSlide();
+            }
+            function goNext() {
+                if (currentSeries.length <= 1) return;
+                currentIndex = (currentIndex + 1) % currentSeries.length;
+                renderSlide();
+            }
+
+            function closeSlideshow() {
+                lightbox.classList.remove('open');
+                document.body.style.overflow = '';
+                lightboxImg.src = '';
+                currentSeries = [];
+                currentIndex = 0;
+            }
+
+            document.querySelectorAll('.photo-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openSlideshow(this);
+                });
+            });
+
+            prevBtn.addEventListener('click', function(e) { e.stopPropagation(); goPrev(); });
+            nextBtn.addEventListener('click', function(e) { e.stopPropagation(); goNext(); });
+            closeBtn.addEventListener('click', closeSlideshow);
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) closeSlideshow();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('open')) return;
+                if (e.key === 'Escape') closeSlideshow();
+                else if (e.key === 'ArrowLeft') goPrev();
+                else if (e.key === 'ArrowRight') goNext();
+            });
+        })();
+    </script>
+</body>
+</html>
