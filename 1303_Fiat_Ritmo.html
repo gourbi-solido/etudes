@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Étude Réf. 1303 Fiat Ritmo</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f5f2eb;
+            color: #2e2b28;
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #fffdf9;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-radius: 24px;
+            padding: 2rem 2rem 3rem;
+            border: 1px solid #e2d9cf;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-top: 0;
+            margin-bottom: 0.4rem;
+            color: #3b2e24;
+            border-bottom: 3px solid #d4b68a;
+            padding-bottom: 0.6rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: #6d5d4e;
+            margin-bottom: 2rem;
+            font-style: italic;
+            background: #faf3e8;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            display: inline-block;
+        }
+        .intro-text {
+            background: #f9f1e6;
+            border-left: 6px solid #b58b5c;
+            padding: 1.2rem 1.5rem;
+            border-radius: 12px;
+            margin: 1.8rem 0 2.2rem;
+            font-size: 0.95rem;
+            color: #3d3228;
+        }
+        .intro-text p { margin: 0.4rem 0; }
+        .chrono-section {
+            margin: 2.8rem 0 1.5rem;
+            position: relative;
+        }
+        .chrono-section h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #5a3e2b;
+            margin: 0 0 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .chrono-section h2 .date-badge {
+            background: #bfa27a;
+            color: #fffdf9;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
+        }
+        .box-card {
+            background: #ffffff;
+            border: 1px solid #e6ddd3;
+            border-radius: 20px;
+            padding: 1.6rem 1.8rem;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            transition: border-color 0.15s;
+        }
+        .box-card:hover { border-color: #cbb295; }
+        .box-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.6rem;
+            border-bottom: 1px dashed #e0d4c6;
+            padding-bottom: 0.6rem;
+        }
+        .box-dates {
+            font-size: 0.9rem;
+            color: #7a6857;
+            background: #fcf7f0;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+            border: 1px solid #e9dacc;
+        }
+        .variant {
+            margin: 1.4rem 0 0.8rem;
+            padding-left: 0.9rem;
+            border-left: 3px solid #cbb295;
+        }
+        .variant strong {
+            font-size: 1.1rem;
+            color: #4e3826;
+            letter-spacing: 0.2px;
+        }
+        .variant-date {
+            font-size: 0.85rem;
+            color: #8b7a69;
+            font-weight: 500;
+            margin-left: 0.6rem;
+        }
+        .desc {
+            margin: 0.5rem 0 1rem;
+            font-size: 0.98rem;
+            color: #2e2b28;
+        }
+        .desc p { margin: 0.4rem 0; }
+        .desc .legend {
+            font-size: 0.9rem;
+            color: #6d5d4e;
+            font-style: italic;
+            margin: 0.3rem 0;
+        }
+
+        .variant-block {
+            margin-top: 0;
+        }
+        .variant-block:not(:first-child) {
+            margin-top: 2rem;
+        }
+
+        /* ====== GALERIE PHOTOS AVEC ZOOM ×8 ====== */
+        .photos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 1rem 0 0.6rem;
+        }
+        .photos .photo-item {
+            display: inline-block;
+            border-radius: 10px;
+            cursor: pointer;
+            line-height: 0;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1),
+                        box-shadow 0.3s ease,
+                        z-index 0s;
+        }
+        .photos .photo-item img {
+            display: block;
+            width: 160px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #e0d4c6;
+            background: #f8f4ef;
+            transition: border-color 0.3s ease, filter 0.3s ease;
+        }
+        .photos .photo-item:hover {
+            transform: scale(1.9);
+            transform-origin: center center;
+            z-index: 9999;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+        }
+        .photos .photo-item:hover img {
+            border-color: #b58b5c;
+            filter: brightness(1.05);
+        }
+        .box-card, .variant, .desc { overflow: visible; }
+
+        /* ====== DIAPORAMA ====== */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 10, 5, 0.93);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            animation: fadeIn 0.2s ease;
+        }
+        .lightbox.open { display: flex; }
+
+        .lightbox-stage {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 92vw;
+        }
+        
+        .lightbox-img-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox img.main-img {
+            max-width: 88vw;
+            max-height: 82vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+            animation: zoomIn 0.25s ease;
+            background: #2a231c;
+            display: block;
+        }
+
+        .lightbox .close-btn {
+            position: fixed;
+            top: 1.2rem;
+            right: 1.6rem;
+            font-size: 1.6rem;
+            color: #fff;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: background 0.15s;
+            z-index: 100005;
+        }
+        .lightbox .close-btn:hover { background: rgba(255,255,255,0.35); }
+
+        .lightbox .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2.4rem;
+            font-weight: 300;
+            color: #fff;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: background 0.15s, transform 0.15s;
+            z-index: 100010;
+            user-select: none;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .lightbox .nav-btn:hover { background: rgba(255,255,255,0.4); color: #000; }
+        .lightbox .nav-btn:active { transform: translateY(-50%) scale(0.94); }
+        .lightbox .nav-btn.prev { left: 10px; }
+        .lightbox .nav-btn.next { right: 10px; }
+        .lightbox .nav-btn[disabled] { opacity: 0.2; cursor: default; background: rgba(0,0,0,0.3); border-color: transparent; }
+
+        .lightbox .counter {
+            margin-top: 1rem;
+            color: #f0e6da;
+            font-size: 0.95rem;
+            font-weight: 500;
+            background: rgba(0,0,0,0.45);
+            padding: 0.35rem 1.1rem;
+            border-radius: 30px;
+            letter-spacing: 0.4px;
+        }
+        .lightbox .caption {
+            margin-top: 0.4rem;
+            color: #cbb295;
+            font-size: 0.82rem;
+            font-family: 'Courier New', monospace;
+            max-width: 70vw;
+            text-align: center;
+            word-break: break-all;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .footnote {
+            font-size: 0.85rem;
+            margin-top: 1.2rem;
+            color: #6d5d4e;
+            border-top: 1px solid #e6ddd3;
+            padding-top: 0.8rem;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.7rem; }
+            .box-header { flex-direction: column; gap: 0.3rem; }
+            .box-title { font-size: 1.1rem; }
+            .photos .photo-item img { width: 120px; height: 90px; }
+            .photos .photo-item:hover { transform: scale(3); }
+            .lightbox .nav-btn { width: 46px; height: 46px; font-size: 1.8rem; left: 5px; right: 5px; }
+            .lightbox img.main-img { max-width: 95vw; max-height: 76vh; }
+        }
+
+        /* ====== TABLEAU ====== */
+        .table-container {
+            overflow-x: auto;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        .custom-table {
+            border-collapse: collapse;
+            width: 100%;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            min-width: 900px;
+            border: 1px solid #a0a0a0;
+        }
+        .custom-table th, 
+        .custom-table td {
+            border: 1px solid #a0a0a0;
+            padding: 4px 6px;
+            vertical-align: middle;
+        }
+        .custom-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .bg-yellow {
+            background-color: #ffffb3;
+        }
+        .center {
+            text-align: center;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        /* Colonnes ajustées au modèle Rolls-Royce */
+        .col-ref { width: 4%; }
+        .col-id { width: 6%; }
+        .col-cond { width: 18%; }
+        .col-vehicule { width: 18%; white-space: nowrap; }
+        .col-couleur { width: 14%; }
+        .col-date { width: 13%; white-space: nowrap; }
+        .col-remarques { width: 27%; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Étude Réf. 1303 Fiat Ritmo 3 portes</h1>
+        <div class="subhead">Étude chronologique des conditionnements — mise à jour novembre 2026</div>
+
+        <div class="intro-text">
+            <p>Cette étude recense les différentes variantes décorées de la Fiat Ritmo 3 portes produites sous la référence 1303.</p>
+            <p>Source : <i>Le Gourbi Solido</i> (forum de collectionneurs).</p>
+            <p><strong>🔍 Astuce :</strong> survolez une photo pour un zoom ×8, cliquez pour ouvrir le diaporama de la série.</p>
+        </div>
+
+        <!-- ========== TABLEAU DES VARIANTES ========== -->
+        <div class="table-container">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th class="col-ref">Réf.</th>
+                        <th class="col-id">Réf. ID</th>
+                        <th class="col-cond">CONDITIONNEMENT</th>
+                        <th class="col-vehicule">VÉHICULE</th>
+                        <th class="col-couleur">COULEUR</th>
+                        <th class="col-date">DATE PROD</th>
+                        <th class="col-remarques">REMARQUES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="bg-yellow center bold" rowspan="23">1303</td>
+                        <td class="center">1303-01A</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center bold" rowspan="23">Fiat Ritmo 3 portes</td>
+                        <td class="bg-yellow center">Bleu clair</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « Fiat N°37 ». Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01B</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Vert clair</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « Fiat N°37 ». Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01C</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Vert clair métallisé</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « Fiat N°37 ». Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01D</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Gris-vert métallisé</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « Fiat N°37 ». Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01E</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Jaune clair</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « papillon ». Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01F</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Jaune clair</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « papillon et aigle ». Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01G</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Bleu clair</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « papillon et aigle ». Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01H</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Jaune clair</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « lapins ». Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01I</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Bleu clair</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « lapins ». Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01J</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Jaune clair</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « Alitalia N°3 ». Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01K</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Bleu clair</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « Alitalia N°3 ». Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01L</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Jaune d’or</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « N°2 ». Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01M</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Jaune d’or</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « N°2 ». Roues T2 à ailettes gris/chrome, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01N</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Jaune clair</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « Store N°31 ». Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01O</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Jaune clair</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « Esso N°59 ». Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01P</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Bleu foncé</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « Médecin de nuit ». Roues T2 à ailettes bleu/blanc, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01Q</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Bleu foncé</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « Médecin de nuit ». Roues T2 à ailettes gris/chrome, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01R</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Bleu foncé</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « Médecin de nuit ». Roues T2 à ailettes gris, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01S</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Bleu foncé</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Sans décoration. Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01T</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Vert clair métallisé</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Sans décoration. Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01U</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Jaune d'or</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Sans décoration. Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">1303-01V</td>
+                        <td class="bg-yellow center bold">Boîte d'origine</td>
+                        <td class="bg-yellow center">Vert métallisé</td>
+                        <td class="bg-yellow center">—</td>
+                        <td class="bg-yellow">Décoration « baoum ». Roues Cougar, aménagement et châssis noirs.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- ========== FIN DU TABLEAU ========== -->
+
+        <!-- ========== FICHES DÉTAILLÉES ========== -->
+        <div class="chrono-section">
+            <h2>Fiches détaillées<span class="date-badge">Réf. 1303</span></h2>
+        </div>
+        
+        <div class="box-card">
+            <!-- 1303-01A -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01A</strong> <span class="box-dates">Bleu clair - Fiat N°37</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes bleu clair avec décoration « Fiat N°37 ». Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01A-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01A+Face" alt="1303-01A Face"></span>
+                        <span class="photo-item" data-caption="1303-01A-02"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01A+Detail" alt="1303-01A Detail"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01B -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01B</strong> <span class="box-dates">Vert clair - Fiat N°37</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes vert clair avec décoration « Fiat N°37 ». Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01B-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01B+Face" alt="1303-01B Face"></span>
+                        <span class="photo-item" data-caption="1303-01B-02"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01B+Detail" alt="1303-01B Detail"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01C -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01C</strong> <span class="box-dates">Vert clair métallisé - Fiat N°37</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes vert clair métallisé avec décoration « Fiat N°37 ». Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01C-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01C+Face" alt="1303-01C Face"></span>
+                        <span class="photo-item" data-caption="1303-01C-02"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01C+Detail" alt="1303-01C Detail"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01D -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01D</strong> <span class="box-dates">Gris-vert métallisé - Fiat N°37</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes gris-vert métallisé avec décoration « Fiat N°37 ». Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01D-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01D+Face" alt="1303-01D Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01E -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01E</strong> <span class="box-dates">Jaune clair - papillon</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes jaune clair avec décoration « papillon ». Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01E-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01E+Face" alt="1303-01E Face"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 1303-01F -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01F</strong> <span class="box-dates">Jaune clair - papillon et aigle</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes jaune clair avec décoration « papillon et aigle ». Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01F-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01F+Face" alt="1303-01F Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01G -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01G</strong> <span class="box-dates">Bleu clair - papillon et aigle</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes bleu clair avec décoration « papillon et aigle ». Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01G-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01G+Face" alt="1303-01G Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01H -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01H</strong> <span class="box-dates">Jaune clair - lapins</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes jaune clair avec décoration « lapins ». Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01H-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01H+Face" alt="1303-01H Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01I -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01I</strong> <span class="box-dates">Bleu clair - lapins</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes bleu clair avec décoration « lapins ». Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01I-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01I+Face" alt="1303-01I Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01J -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01J</strong> <span class="box-dates">Jaune clair - Alitalia N°3</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes jaune clair avec décoration « Alitalia N°3 ». Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01J-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01J+Face" alt="1303-01J Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01K -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01K</strong> <span class="box-dates">Bleu clair - Alitalia N°3</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes bleu clair avec décoration « Alitalia N°3 ». Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01K-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01K+Face" alt="1303-01K Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01L -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01L</strong> <span class="box-dates">Jaune d’or - N°2</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes jaune d’or avec décoration « N°2 ». Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01L-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01L+Face" alt="1303-01L Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01M -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01M</strong> <span class="box-dates">Jaune d’or - N°2</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes jaune d’or avec décoration « N°2 ». Roues T2 à ailettes gris/chrome, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01M-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01M+Face" alt="1303-01M Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01N -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01N</strong> <span class="box-dates">Jaune clair - Store N°31</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes jaune clair avec décoration « Store N°31 ». Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01N-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01N+Face" alt="1303-01N Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01O -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01O</strong> <span class="box-dates">Jaune clair - Esso N°59</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes jaune clair avec décoration « Esso N°59 ». Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01O-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01O+Face" alt="1303-01O Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01P -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01P</strong> <span class="box-dates">Bleu foncé - Médecin de nuit</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes bleu foncé avec décoration « Médecin de nuit ». Roues T2 à ailettes bleu/blanc, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01P-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01P+Face" alt="1303-01P Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01Q -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01Q</strong> <span class="box-dates">Bleu foncé - Médecin de nuit</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes bleu foncé avec décoration « Médecin de nuit ». Roues T2 à ailettes gris/chrome, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01Q-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01Q+Face" alt="1303-01Q Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01R -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01R</strong> <span class="box-dates">Bleu foncé - Médecin de nuit</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes bleu foncé avec décoration « Médecin de nuit ». Roues T2 à ailettes gris, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01R-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01R+Face" alt="1303-01R Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01S -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01S</strong> <span class="box-dates">Bleu foncé - sans décoration</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes bleu foncé sans décoration. Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01S-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01S+Face" alt="1303-01S Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01T -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01T</strong> <span class="box-dates">Vert clair métallisé - sans décoration</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes vert clair métallisé sans décoration. Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01T-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01T+Face" alt="1303-01T Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01U -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01U</strong> <span class="box-dates">Jaune d'or - sans décoration</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes jaune d'or sans décoration. Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01U-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01U+Face" alt="1303-01U Face"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1303-01V -->
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 1303-01V</strong> <span class="box-dates">Vert métallisé - baoum</span>
+                <div class="desc">
+                    <p>Fiat Ritmo 3 portes vert métallisé avec décoration « baoum ». Roues Cougar, aménagement et châssis noirs.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="1303-01V-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=1303-01V+Face" alt="1303-01V Face"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footnote">
+            <p>Document généré à partir de recherches et de documentations. Pour toute suggestion ou information complémentaire, se référer au forum <a href="https://le-gourbi-solido.forumactif.com" target="_blank" rel="noopener noreferrer"><em>Le Gourbi Solido</em></a>.</p>
+            <p style="text-align:right; font-size:0.8rem;">(mise à jour le 13/11/2026)</p>
+        </div>
+    </div>
+
+    <!-- ====== DIAPORAMA ====== -->
+    <div class="lightbox" id="lightbox">
+        <button class="close-btn" id="lightbox-close" aria-label="Fermer">✕</button>
+        <div class="lightbox-stage">
+            <div class="lightbox-img-wrap">
+                <button class="nav-btn prev" id="lightbox-prev" aria-label="Précédent">‹</button>
+                <img class="main-img" src="" alt="Photo agrandie" id="lightbox-img">
+                <button class="nav-btn next" id="lightbox-next" aria-label="Suivant">›</button>
+            </div>
+            <div class="counter" id="lightbox-counter">1 / 1</div>
+            <div class="caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const counter = document.getElementById('lightbox-counter');
+            const caption = document.getElementById('lightbox-caption');
+            const prevBtn = document.getElementById('lightbox-prev');
+            const nextBtn = document.getElementById('lightbox-next');
+            const closeBtn = document.getElementById('lightbox-close');
+
+            let currentSeries = [];
+            let currentIndex = 0;
+
+            function openSlideshow(photoItem) {
+                const gallery = photoItem.closest('.photos');
+                if (!gallery) return;
+
+                currentSeries = Array.from(gallery.querySelectorAll('.photo-item')).map(el => ({
+                    src: el.querySelector('img').src,
+                    caption: el.dataset.caption || ''
+                }));
+
+                currentIndex = Array.from(gallery.querySelectorAll('.photo-item')).indexOf(photoItem);
+                if (currentIndex < 0) currentIndex = 0;
+
+                renderSlide();
+                lightbox.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function renderSlide() {
+                if (!currentSeries.length) return;
+                const item = currentSeries[currentIndex];
+                lightboxImg.src = item.src;
+                lightboxImg.alt = item.caption || 'Photo';
+                caption.textContent = item.caption;
+                counter.textContent = (currentIndex + 1) + ' / ' + currentSeries.length;
+
+                const onlyOne = currentSeries.length <= 1;
+                prevBtn.disabled = onlyOne;
+                nextBtn.disabled = onlyOne;
+            }
+
+            function goPrev() {
+                if (currentSeries.length <= 1) return;
+                currentIndex = (currentIndex - 1 + currentSeries.length) % currentSeries.length;
+                renderSlide();
+            }
+            function goNext() {
+                if (currentSeries.length <= 1) return;
+                currentIndex = (currentIndex + 1) % currentSeries.length;
+                renderSlide();
+            }
+
+            function closeSlideshow() {
+                lightbox.classList.remove('open');
+                document.body.style.overflow = '';
+                lightboxImg.src = '';
+                currentSeries = [];
+                currentIndex = 0;
+            }
+
+            document.querySelectorAll('.photo-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openSlideshow(this);
+                });
+            });
+
+            prevBtn.addEventListener('click', function(e) { e.stopPropagation(); goPrev(); });
+            nextBtn.addEventListener('click', function(e) { e.stopPropagation(); goNext(); });
+            closeBtn.addEventListener('click', closeSlideshow);
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) closeSlideshow();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('open')) return;
+                if (e.key === 'Escape') closeSlideshow();
+                else if (e.key === 'ArrowLeft') goPrev();
+                else if (e.key === 'ArrowRight') goNext();
+            });
+        })();
+    </script>
+</body>
+</html>
