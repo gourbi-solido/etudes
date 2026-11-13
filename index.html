@@ -195,6 +195,8 @@
                 <option value="home">🏠 Accueil / Recherche</option>
                 <option value="21_MATRA-SIMCA-BAGHEERA.html">Réf. 21 Matra Simca Bagheera</option>
                 <option value="1202_Fiat_Ritmo.html">Réf. 1202 Fiat Ritmo</option>
+                <!-- NOUVELLE LIGNE AJOUTÉE ICI -->
+                <option value="1303_Fiat_Ritmo.html">Réf. 1303 Fiat Ritmo</option>
                 <option value="46_ROLLS-ROYCE-PHANTOM-III.html">Réf. 46 - Rolls Royce Phantom III</option>
                 <option value="4046_ROLLS-ROYCE-PHANTOM-III.html">Réf. 4046 - Rolls Royce Phantom III</option>
                 <option value="4156_DUESENBERG-J.html">Réf. 4156 - Duesenberg J</option>
@@ -215,7 +217,7 @@
                 <p>Recherchez une étude, une référence ou un modèle dans notre base de données.</p>
                 
                 <div class="search-container">
-                    <input type="text" id="searchInput" placeholder="Ex: Rolls, Duesenberg, Dynam, boîte..." onkeypress="handleKeyPress(event)">
+                    <input type="text" id="searchInput" placeholder="Ex: Rolls, Duesenberg, Dynam, Ritmo..." onkeypress="handleKeyPress(event)">
                     <button onclick="searchStudies()">Rechercher</button>
                 </div>
 
@@ -242,9 +244,16 @@
             },
             { 
                 title: "Réf. 1202 FIAT Ritmo 3 portes", 
-                keywords: "1220 FIAT Ritmo", 
+                keywords: "1202 FIAT Ritmo", 
                 file: "1202_Fiat_Ritmo.html",
                 desc: "Étude Réf. 1202 Fiat Ritmo."
+            },
+            // NOUVEL OBJET AJOUTÉ ICI
+            { 
+                title: "Réf. 1303 FIAT Ritmo 3 portes", 
+                keywords: "1303 FIAT Ritmo fiat n37 papillon alitalia medecin de nuit", 
+                file: "1303_Fiat_Ritmo.html",
+                desc: "Étude des variantes décorées de la Réf. 1303."
             },
             { 
                 title: "Réf. 46 Rolls Royce Phantom III", 
@@ -264,7 +273,6 @@
                 file: "4156_DUESENBERG-J.html",
                 desc: "Étude des conditionnements Type 1 à 5 (1982-2001)."
             },
-            // NOUVEL OBJET AJOUTÉ ICI
             { 
                 title: "Série Dynam (Étude Complète)", 
                 keywords: "dynam economique harvey indy fiat abarth alpine nsu porsche carabo", 
