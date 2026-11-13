@@ -193,11 +193,12 @@
             <label for="studySelector">📚 Aller à une étude :</label>
             <select id="studySelector" onchange="changeStudy()">
                 <option value="home">🏠 Accueil / Recherche</option>
-                <!-- NOM CORRIGÉ ICI (Ajout du 21) et FICHIER SANS ESPACE -->
                 <option value="21_MATRA-SIMCA-BAGHEERA.html">Réf. 21 Matra Simca Bagheera</option>
                 <option value="46_ROLLS-ROYCE-PHANTOM-III.html">Réf. 46 - Rolls Royce Phantom III</option>
                 <option value="4046_ROLLS-ROYCE-PHANTOM-III.html">Réf. 4046 - Rolls Royce Phantom III</option>
                 <option value="4156_DUESENBERG-J.html">Réf. 4156 - Duesenberg J</option>
+                <!-- NOUVELLE LIGNE AJOUTÉE ICI -->
+                <option value="DYNAM_ETUDE_SERIE_COMPLETE.html">Série Dynam (Réf. 10 à 15)</option>
                 <option value="etudes_boîtes_age_d_or.html">Les Boîtes Age d'Or</option>
                 <option value="maxicar_chassis.html">Les châssis Maxicar</option>
             </select>
@@ -214,7 +215,7 @@
                 <p>Recherchez une étude, une référence ou un modèle dans notre base de données.</p>
                 
                 <div class="search-container">
-                    <input type="text" id="searchInput" placeholder="Ex: Rolls, 4046, Duesenberg, boîte..." onkeypress="handleKeyPress(event)">
+                    <input type="text" id="searchInput" placeholder="Ex: Rolls, Duesenberg, Dynam, boîte..." onkeypress="handleKeyPress(event)">
                     <button onclick="searchStudies()">Rechercher</button>
                 </div>
 
@@ -236,7 +237,6 @@
             { 
                 title: "Réf. 21 Matra Simca Bagheera", 
                 keywords: "Matra Simca Bagheera 21", 
-                // FICHIER SANS ESPACE ICI AUSSI
                 file: "21_MATRA-SIMCA-BAGHEERA.html",
                 desc: "Étude chronologique des conditionnements (11/1973-1980)."
             },
@@ -257,6 +257,13 @@
                 keywords: "4156 duesenberg berline 1935 boîte socle blanc", 
                 file: "4156_DUESENBERG-J.html",
                 desc: "Étude des conditionnements Type 1 à 5 (1982-2001)."
+            },
+            // NOUVEL OBJET AJOUTÉ ICI
+            { 
+                title: "Série Dynam (Étude Complète)", 
+                keywords: "dynam economique harvey indy fiat abarth alpine nsu porsche carabo", 
+                file: "DYNAM_ETUDE_SERIE_COMPLETE.html",
+                desc: "Fiches détaillées des modèles Dynam (Réf. 10 à 15) et de leurs variantes."
             },
             { 
                 title: "Étude : Les Boîtes Age d'Or", 
