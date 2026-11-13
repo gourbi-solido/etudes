@@ -193,7 +193,8 @@
             <label for="studySelector">📚 Aller à une étude :</label>
             <select id="studySelector" onchange="changeStudy()">
                 <option value="home">🏠 Accueil / Recherche</option>
-                <option value="21_ MATRA-SIMCA-BAGHEERA_ETUDE.html">Réf. Matra Simca Bagheera</option>
+                <!-- NOM CORRIGÉ ICI (Ajout du 21) et FICHIER SANS ESPACE -->
+                <option value="21_MATRA-SIMCA-BAGHEERA.html">Réf. 21 Matra Simca Bagheera</option>
                 <option value="46_ROLLS-ROYCE-PHANTOM-III.html">Réf. 46 - Rolls Royce Phantom III</option>
                 <option value="4046_ROLLS-ROYCE-PHANTOM-III.html">Réf. 4046 - Rolls Royce Phantom III</option>
                 <option value="4156_DUESENBERG-J.html">Réf. 4156 - Duesenberg J</option>
@@ -232,10 +233,11 @@
     <script>
         // Base de données des études pour la recherche
         const studiesDatabase = [
-                        { 
+            { 
                 title: "Réf. 21 Matra Simca Bagheera", 
-                keywords: "Matra Simca Bagheera", 
-                file: "21_ MATRA-SIMCA-BAGHEERA.html",
+                keywords: "Matra Simca Bagheera 21", 
+                // FICHIER SANS ESPACE ICI AUSSI
+                file: "21_MATRA-SIMCA-BAGHEERA.html",
                 desc: "Étude chronologique des conditionnements (11/1973-1980)."
             },
             { 
@@ -318,7 +320,7 @@
                             <h4>${study.title}</h4>
                             <p>${study.desc}</p>
                         </div>
-                        <a href="#" onclick="loadStudyFromSearch('${study.file}')">Voir l'étude</a>
+                        <a href="#" onclick="loadStudyFromSearch('${study.file}'); return false;">Voir l'étude</a>
                     `;
                     resultsContainer.appendChild(card);
                 });
