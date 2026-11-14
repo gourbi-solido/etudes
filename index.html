@@ -153,6 +153,9 @@
             } else {
                 resultsContainer.innerHTML = "<p class='no-result'>Aucune étude ne correspond à votre recherche.</p>";
             }
+
+            // NOUVELLE LIGNE : Vider le champ de recherche après l'affichage
+            document.getElementById("searchInput").value = "";
         }
 
         // 5. Charger une étude depuis les résultats
