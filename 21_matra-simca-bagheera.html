@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Étude Réf. 0021 Matra Simca Bagheera</title>
+    <title>Étude Réf. 21 Matra Simca Bagheera</title>
     <style>
         * { box-sizing: border-box; }
         body {
@@ -83,9 +83,57 @@
             padding: 1.6rem 1.8rem;
             margin-bottom: 1.8rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            transition: border-color 0.15s;
         }
-        .variant-block {
-            margin-top: 0;
+        .box-card:hover { border-color: #cbb295; }
+        .box-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.6rem;
+            border-bottom: 1px dashed #e0d4c6;
+            padding-bottom: 0.6rem;
+        }
+        .box-title {
+            font-size: 1.3rem;
+            font-weight: 650;
+            color: #3d2b1c;
+        }
+        .box-id {
+            font-family: 'Courier New', monospace;
+            background: #f1ebe4;
+            padding: 0.15rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #5b3f2c;
+            letter-spacing: 0.3px;
+        }
+        .box-dates {
+            font-size: 0.9rem;
+            color: #7a6857;
+            background: #fcf7f0;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+            border: 1px solid #e9dacc;
+        }
+        .variant {
+            margin: 1.4rem 0 0.8rem;
+            padding-left: 0.9rem;
+            border-left: 3px solid #cbb295;
+        }
+        .variant strong {
+            font-size: 1.1rem;
+            color: #4e3826;
+            letter-spacing: 0.2px;
+        }
+        .variant-date {
+            font-size: 0.85rem;
+            color: #8b7a69;
+            font-weight: 500;
+            margin-left: 0.6rem;
         }
         .desc {
             margin: 0.5rem 0 1rem;
@@ -93,8 +141,24 @@
             color: #2e2b28;
         }
         .desc p { margin: 0.4rem 0; }
+        .desc ul { margin: 0.4rem 0; padding-left: 1.5rem; }
+        .desc li { margin-bottom: 0.2rem; }
+        .desc .legend {
+            font-size: 0.9rem;
+            color: #6d5d4e;
+            font-style: italic;
+            margin: 0.3rem 0;
+        }
 
-        /* ====== GALERIE PHOTOS ====== */
+        /* Bloc pour les titres sans marge supérieure excessive */
+        .variant-block {
+            margin-top: 0;
+        }
+        .variant-block:not(:first-child) {
+            margin-top: 2rem;
+        }
+
+        /* ====== GALERIE PHOTOS AVEC ZOOM ×8 ====== */
         .photos {
             display: flex;
             flex-wrap: wrap;
@@ -109,7 +173,8 @@
             position: relative;
             z-index: 1;
             transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1),
-                        box-shadow 0.3s ease;
+                        box-shadow 0.3s ease,
+                        z-index 0s;
         }
         .photos .photo-item img {
             display: block;
@@ -131,6 +196,7 @@
             border-color: #b58b5c;
             filter: brightness(1.05);
         }
+        .box-card, .variant, .desc { overflow: visible; }
 
         /* ====== DIAPORAMA ====== */
         .lightbox {
@@ -142,8 +208,10 @@
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            animation: fadeIn 0.2s ease;
         }
         .lightbox.open { display: flex; }
+
         .lightbox-stage {
             position: relative;
             display: flex;
@@ -152,20 +220,24 @@
             justify-content: center;
             max-width: 92vw;
         }
+        
         .lightbox-img-wrap {
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
         }
+
         .lightbox img.main-img {
             max-width: 88vw;
             max-height: 82vh;
             border-radius: 12px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+            animation: zoomIn 0.25s ease;
             background: #2a231c;
             display: block;
         }
+
         .lightbox .close-btn {
             position: fixed;
             top: 1.2rem;
@@ -181,13 +253,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            line-height: 1;
+            transition: background 0.15s;
             z-index: 100005;
         }
+        .lightbox .close-btn:hover { background: rgba(255,255,255,0.35); }
+
         .lightbox .nav-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             font-size: 2.4rem;
+            font-weight: 300;
             color: #fff;
             background: rgba(0,0,0,0.6);
             border: 1px solid rgba(255,255,255,0.4);
@@ -198,24 +275,58 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            line-height: 1;
+            transition: background 0.15s, transform 0.15s;
             z-index: 100010;
+            user-select: none;
+            padding: 0;
+            font-family: Arial, sans-serif;
         }
         .lightbox .nav-btn:hover { background: rgba(255,255,255,0.4); color: #000; }
+        .lightbox .nav-btn:active { transform: translateY(-50%) scale(0.94); }
         .lightbox .nav-btn.prev { left: 10px; }
         .lightbox .nav-btn.next { right: 10px; }
-        .lightbox .nav-btn[disabled] { opacity: 0.2; cursor: default; }
+        .lightbox .nav-btn[disabled] { opacity: 0.2; cursor: default; background: rgba(0,0,0,0.3); border-color: transparent; }
+
         .lightbox .counter {
             margin-top: 1rem;
             color: #f0e6da;
+            font-size: 0.95rem;
+            font-weight: 500;
             background: rgba(0,0,0,0.45);
             padding: 0.35rem 1.1rem;
             border-radius: 30px;
+            letter-spacing: 0.4px;
         }
         .lightbox .caption {
             margin-top: 0.4rem;
             color: #cbb295;
             font-size: 0.82rem;
+            font-family: 'Courier New', monospace;
+            max-width: 70vw;
             text-align: center;
+            word-break: break-all;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .footnote {
+            font-size: 0.85rem;
+            margin-top: 1.2rem;
+            color: #6d5d4e;
+            border-top: 1px solid #e6ddd3;
+            padding-top: 0.8rem;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.7rem; }
+            .box-header { flex-direction: column; gap: 0.3rem; }
+            .box-title { font-size: 1.1rem; }
+            .photos .photo-item img { width: 120px; height: 90px; }
+            .photos .photo-item:hover { transform: scale(3); }
+            .lightbox .nav-btn { width: 46px; height: 46px; font-size: 1.8rem; left: 5px; right: 5px; }
+            .lightbox img.main-img { max-width: 95vw; max-height: 76vh; }
         }
 
         /* ====== TABLEAU ====== */
@@ -229,26 +340,37 @@
             width: 100%;
             font-family: Arial, sans-serif;
             font-size: 13px;
+            min-width: 1100px;
             border: 1px solid #a0a0a0;
         }
         .custom-table th, 
         .custom-table td {
             border: 1px solid #a0a0a0;
             padding: 4px 6px;
+            vertical-align: middle;
         }
         .custom-table th {
             background-color: #f2f2f2;
             font-weight: bold;
             text-align: center;
+            white-space: nowrap;
         }
         .bg-yellow { background-color: #ffffb3; }
         .center { text-align: center; }
         .bold { font-weight: bold; }
+        .col-ref { width: 6%; }
+        .col-cond { width: 15%; }
+        .col-vehicule { width: 12%; white-space: nowrap; }
+        .col-couleur { width: 15%; }
+        .col-date { width: 10%; white-space: nowrap; }
+        .col-remarques { width: 42%; font-size: 12px; }
+        .col-remarques ul { margin: 0; padding-left: 15px; }
     </style>
+    <style id="gourbedit-largeur">.container { max-width: calc(1100px + 5cm); }</style>
 </head>
 <body>
     <div class="container">
-        <h1>Étude Réf. 0021 Matra Simca Bagheera</h1>
+        <h1>Étude Réf. 21 Matra Simca Bagheera</h1>
         <div class="subhead">Étude chronologique des conditionnements — mise à jour novembre 2026</div>
 
         <div class="intro-text">
@@ -280,26 +402,27 @@
                         <td class="bg-yellow center bold" rowspan="6">MATRA-SIMCA<br>Bagheera</td>
                         <td class="bg-yellow center">vert</td>
                         <td class="bg-yellow center" rowspan="4">11/1973-1980</td>
-                        <td class="bg-yellow" rowspan="4">adhésif métallisé sur les custodes</td>
-                    </tr>
-                    <tr>
-                        <td class="center">21-02A</td>
-                        <td class="bg-yellow center">aluminium</td>
-                    </tr>
-                    <tr>
-                        <td class="center">21-03A</td>
-                        <td class="bg-yellow center">rouge orangé</td>
-                    </tr>
-                    <tr>
-                        <td class="center">21-04A</td>
-                        <td class="bg-yellow center">jaune citron</td>
+                        <td class="bg-yellow" rowspan="2">Miniatures jamais observées à ce jour</td>
                     </tr>
                     <tr>
                         <td class="center">21-01B</td>
+                        <td class="bg-yellow center">aluminium</td>
+                    </tr>
+                    <tr>
+                        <td class="center">21-01C</td>
+                        <td class="bg-yellow center">rouge orangé</td>
+                        <td class="bg-yellow" rowspan="2">adhésif métallisé sur les custodes</td>
+                    </tr>
+                    <tr>
+                        <td class="center">21-01D</td>
+                        <td class="bg-yellow center">jaune citron</td>
+                    </tr>
+                    <tr>
+                        <td class="center">21-02A</td>
                         <td class="bg-yellow center bold" rowspan="2">boîte vitrine GAM2</td>
                         <td class="bg-yellow center">rouge vif</td>
                         <td class="bg-yellow center" rowspan="2"></td>
-                        <td class="bg-yellow" rowspan="2">adhésif supprimé !</td>
+                        <td class="bg-yellow" rowspan="2">adhésif des custodes supprimé !</td>
                     </tr>
                     <tr>
                         <td class="center">21-02B</td>
@@ -308,138 +431,90 @@
                 </tbody>
             </table>
         </div>
+        <!-- ========== FIN DU TABLEAU ========== -->
 
-        <!-- ========================================== -->
-        <!-- CHAPITRES PAR RÉFÉRENCE ID                 -->
-        <!-- ========================================== -->
-
-        <!-- CHAPITRE 1 : 21-01A -->
+        <!-- ========== Réf. 21 : Boîte Type VII ========== -->
         <div class="chrono-section">
-            <h2>Réf. ID : 21-01A <span class="date-badge">Boîte Type VII</span></h2>
+            <h2>Réf. 21 : Boîte Type VII <span class="date-badge">11/1973-1980</span></h2>
         </div>
         <div class="box-card">
             <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Boîte type VII</strong> <span class="box-dates">(11/1973-1980)</span> <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 21-01(x)</strong> <span class="variant-date"></span>
+                <br><br><strong>Réf. ID : 21-01A</strong> (Vert)
                 <div class="desc">
-                    <p><strong>Vert</strong> - Boîte vitrine type VII. Adhésif métallisé sur les custodes.</p>
-                    <p><em>(Pas de photo)</em></p>
                 </div>
-            </div>
-        </div>
-
-        <!-- CHAPITRE 2 : 21-02A -->
-        <div class="chrono-section">
-            <h2>Réf. ID : 21-02A <span class="date-badge">Boîte Type VII</span></h2>
-        </div>
-        <div class="box-card">
-            <div class="variant-block">
+                <br><strong>Réf. ID : 21-01B</strong> (Aluminium)
                 <div class="desc">
-                    <p><strong>Aluminium</strong> - Boîte vitrine type VII. Adhésif métallisé sur les custodes.</p>
-                    <p><em>(Pas de photo)</em></p>
                 </div>
-            </div>
-        </div>
-
-        <!-- CHAPITRE 3 : 21-03A (Photos de la voiture JAUNE) -->
-        <div class="chrono-section">
-            <h2>Réf. ID : 21-03A <span class="date-badge">Boîte Type VII</span></h2>
-        </div>
-        <div class="box-card">
-            <div class="variant-block">
+                <br><strong>Réf. ID : 21-01C</strong> (Rouge orangé)
                 <div class="desc">
-                    <p><strong>Rouge orangé</strong> - Boîte vitrine type VII. Adhésif métallisé sur les custodes.</p>
                     <div class="photos">
-                        <!-- Photos de la voiture JAUNE (type VII) -->
-                        <span class="photo-item" data-caption="Type VII - Rouge 01"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_0110.jpg" alt="Type VII"></span>
-                        <span class="photo-item" data-caption="Type VII - Rouge 09"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_1110.jpg" alt="Type VII"></span>
-                        <span class="photo-item" data-caption="Type VII - Rouge 10"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_1210.jpg" alt="Type VII"></span>
-                        <span class="photo-item" data-caption="Type VII - Rouge 11"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_1310.jpg" alt="Type VII"></span>
-                        <span class="photo-item" data-caption="Type VII - Rouge 12"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_1410.jpg" alt="Type VII"></span>
-                        <span class="photo-item" data-caption="Type VII - Rouge 13"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_1510.jpg" alt="Type VII"></span>
+                        <span class="photo-item" data-caption="21 - 21-01C - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_0110.jpg" alt="Type VII"></span>
+                        <span class="photo-item" data-caption="21 - 21-01C - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_1110.jpg" alt="Type VII"></span>
+                        <span class="photo-item" data-caption="21 - 21-01C - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_1210.jpg" alt="Type VII"></span>
+                        <span class="photo-item" data-caption="21 - 21-01C - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_1310.jpg" alt="Type VII"></span>
+                        <span class="photo-item" data-caption="21 - 21-01C - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_1410.jpg" alt="Type VII"></span>
+                        <span class="photo-item" data-caption="21 - 21-01C - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_1510.jpg" alt="Type VII"></span>
+                    </div>
+                </div>
+                <br><strong>Réf. ID : 21-01D</strong> (Jaune citron)
+                <div class="desc">
+                    <div class="photos">
+                        <span class="photo-item" data-caption="21 - 21-01D - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_0210.jpg" alt="Type VII"></span>
+                        <span class="photo-item" data-caption="21 - 21-01D - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_0310.jpg" alt="Type VII"></span>
+                        <span class="photo-item" data-caption="21 - 21-01D - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_0410.jpg" alt="Type VII"></span>
+                        <span class="photo-item" data-caption="21 - 21-01D - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_0510.jpg" alt="Type VII"></span>
+                        <span class="photo-item" data-caption="21 - 21-01D - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_0610.jpg" alt="Type VII"></span>
+                        <span class="photo-item" data-caption="21 - 21-01D - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_0710.jpg" alt="Type VII"></span>
+                        <span class="photo-item" data-caption="21 - 21-01D - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_0810.jpg" alt="Type VII"></span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- CHAPITRE 4 : 21-04A (Photos de la voiture ROUGE) -->
+        <!-- ========== Réf. 21 : Boîte Gam 2 ========== -->
         <div class="chrono-section">
-            <h2>Réf. ID : 21-04A <span class="date-badge">Boîte Type VII</span></h2>
+            <h2>Réf. 21 : Boîte Gam 2</h2>
         </div>
         <div class="box-card">
             <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Boîte Gam 2</strong>  <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 21-02(x)</strong> <span class="variant-date"></span>
+                <br><br><strong>Réf. ID : 21-02A</strong> (Rouge vif)
                 <div class="desc">
-                    <p><strong>Jaune citron</strong> - Boîte vitrine type VII. Adhésif métallisé sur les custodes.</p>
                     <div class="photos">
-                        <!-- Photos de la voiture ROUGE (type VII) -->
-                        <span class="photo-item" data-caption="Type VII - Jaune 02"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_0210.jpg" alt="Type VII"></span>
-                        <span class="photo-item" data-caption="Type VII - Jaune 03"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_0310.jpg" alt="Type VII"></span>
-                        <span class="photo-item" data-caption="Type VII - Jaune 04"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_0410.jpg" alt="Type VII"></span>
-                        <span class="photo-item" data-caption="Type VII - Jaune 05"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_0510.jpg" alt="Type VII"></span>
-                        <span class="photo-item" data-caption="Type VII - Jaune 06"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_0610.jpg" alt="Type VII"></span>
-                        <span class="photo-item" data-caption="Type VII - Jaune 07"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_0710.jpg" alt="Type VII"></span>
-                        <span class="photo-item" data-caption="Type VII - Jaune 08"><img src="https://i.servimg.com/u/f51/17/62/53/34/21a_0810.jpg" alt="Type VII"></span>
+                        <span class="photo-item" data-caption="21 - 21-02A - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21b_0610.jpg" alt="Gam 2"></span>
+                        <span class="photo-item" data-caption="21 - 21-02A - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21b_0710.jpg" alt="Gam 2"></span>
+                    </div>
+                </div>
+                <br><strong>Réf. ID : 21-02B</strong> (Jaune)
+                <div class="desc">
+                    <div class="photos">
+                        <span class="photo-item" data-caption="21 - 21-02B - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21b_0110.jpg" alt="Gam 2"></span>
+                        <span class="photo-item" data-caption="21 - 21-02B - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21b_1010.jpg" alt="Gam 2"></span>
+                        <span class="photo-item" data-caption="21 - 21-02B - MATRA-SIMCA Bagheera"><img src="https://i.servimg.com/u/f51/17/62/53/34/21b_1110.jpg" alt="Gam 2"></span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- CHAPITRE 5 : 21-01B -->
-        <div class="chrono-section">
-            <h2>Réf. ID : 21-01B <span class="date-badge">Boîte Gam 2</span></h2>
-        </div>
-        <div class="box-card">
-            <div class="variant-block">
-                <div class="desc">
-                    <p><strong>Rouge vif</strong> - Boîte vitrine GAM2. Adhésif supprimé !</p>
-                    <div class="photos">
-                        <!-- Photo n°1 de la boîte Gam 2 -->
-                        <span class="photo-item" data-caption="Gam 2 - 01"><img src="https://i.servimg.com/u/f51/17/62/53/34/21b_0110.jpg" alt="Gam 2"></span>
-                        
-                        <!-- Les 4 photos déplacées depuis 21-03A -->
-                        <span class="photo-item" data-caption="Gam 2 - 04"><img src="https://i.servimg.com/u/f51/17/62/53/34/21b_0410.jpg" alt="Gam 2"></span>
-                        <span class="photo-item" data-caption="Gam 2 - 05"><img src="https://i.servimg.com/u/f51/17/62/53/34/21b_0510.jpg" alt="Gam 2"></span>
-                        <span class="photo-item" data-caption="Gam 2 - 06"><img src="https://i.servimg.com/u/f51/17/62/53/34/21b_0610.jpg" alt="Gam 2"></span>
-                        <span class="photo-item" data-caption="Gam 2 - 07"><img src="https://i.servimg.com/u/f51/17/62/53/34/21b_0710.jpg" alt="Gam 2"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- CHAPITRE 6 : 21-02B -->
-        <div class="chrono-section">
-            <h2>Réf. ID : 21-02B <span class="date-badge">Boîte Gam 2</span></h2>
-        </div>
-        <div class="box-card">
-            <div class="variant-block">
-                <div class="desc">
-                    <p><strong>Jaune</strong> - Boîte vitrine GAM2. Adhésif supprimé !</p>
-                    <div class="photos">
-                        <span class="photo-item" data-caption="Gam 2 (sans adhésif) - 09"><img src="https://i.servimg.com/u/f51/17/62/53/34/21b_0910.jpg" alt="Gam 2"></span>
-                        <span class="photo-item" data-caption="Gam 2 (sans adhésif) - 10"><img src="https://i.servimg.com/u/f51/17/62/53/34/21b_1010.jpg" alt="Gam 2"></span>
-                        <span class="photo-item" data-caption="Gam 2 (sans adhésif) - 11"><img src="https://i.servimg.com/u/f51/17/62/53/34/21b_1110.jpg" alt="Gam 2"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- CHAPITRES DIVERS (DÉTAILS, CATALOGUES)     -->
-        <!-- ========================================== -->
-
+        <!-- ========== Détails de production ========== -->
         <div class="chrono-section">
             <h2>Détails de production</h2>
         </div>
         <div class="box-card">
             <div class="variant-block">
-                <strong style="font-size: 1.1rem; color: #4e3826;">Montage du vitrage</strong>
+                <strong style="font-size: 1.1rem; color: #4e3826;">Montage du vitrage</strong>  <strong style="font-size: 1.1rem; color: #4e3826;"></strong> <span class="variant-date"></span>
+                <br><br><strong></strong> 
                 <div class="desc">
-                    <p>Le vitrage est tout d'abord simplement posé dans l'habitacle, puis est percé et maintenu par un petit téton placé sous le pavillon.</p>
+                    <p class="legend">Le vitrage est tout d'abord simplement posé dans l'habitacle, puis est percé et maintenu par un petit téton placé sous le pavillon.</p>
                     <div class="photos">
                         <span class="photo-item" data-caption="Montage du vitrage"><img src="https://i.servimg.com/u/f51/17/62/53/34/21c_0211.jpg" alt="Vitrage"></span>
                     </div>
                 </div>
             </div>
             <div class="variant-block">
-                <strong style="font-size: 1.1rem; color: #4e3826;">Détails de la boîte Type VII</strong>
+                <strong style="font-size: 1.1rem; color: #4e3826;">Détails de la boîte Type VII</strong>  <strong style="font-size: 1.1rem; color: #4e3826;"></strong> <span class="variant-date"></span>
+                <br><br><strong></strong> 
                 <div class="desc">
                     <div class="photos">
                         <span class="photo-item" data-caption="Type VII - Jaune 08"><img src="https://i.postimg.cc/SQ1pSgbq/21-1021-MATRA-SIMCA-BAGHEERA-N-1-9.jpg" alt="Type VII"></span>
@@ -453,12 +528,14 @@
             </div>
         </div>
 
+        <!-- ========== Catalogues et publicités ========== -->
         <div class="chrono-section">
             <h2>Catalogues et publicités</h2>
         </div>
         <div class="box-card">
             <div class="variant-block">
-                <strong style="font-size: 1.1rem; color: #4e3826;">Extraits des catalogues (1974 - 1978)</strong>
+                <strong style="font-size: 1.1rem; color: #4e3826;">Extraits des catalogues (1974 - 1978)</strong>  <strong style="font-size: 1.1rem; color: #4e3826;"></strong> <span class="variant-date"></span>
+                <br><br><strong></strong> 
                 <div class="desc">
                     <div class="photos">
                         <span class="photo-item" data-caption="Catalogue 1974"><img src="https://i.servimg.com/u/f51/17/62/53/34/cba_7410.jpg" alt="Cata 74"></span>
@@ -468,9 +545,9 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="variant-block" style="margin-top: 2rem;">
-                <strong style="font-size: 1.1rem; color: #4e3826;">Publicité d'époque</strong>
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">Publicité d'époque</strong>  <strong style="font-size: 1.1rem; color: #4e3826;"></strong> <span class="variant-date"></span>
+                <br><br><strong></strong> 
                 <div class="desc">
                     <div class="photos">
                         <span class="photo-item" data-caption="Publicité d'époque"><img src="https://i.servimg.com/u/f51/17/62/53/34/img10410.jpg" alt="Pub"></span>
@@ -479,6 +556,10 @@
             </div>
         </div>
 
+        <div class="footnote">
+            <p>Document généré à partir de recherches et de documentations. Les dates sont données à titre indicatif et peuvent être approximatives. Pour toute suggestion ou information complémentaire, se référer au forum <a href="https://le-gourbi-solido.forumactif.com" target="_blank" rel="noopener noreferrer"><em>Le Gourbi Solido</em></a>.</p>
+            <p style="text-align:right; font-size:0.8rem;">(mise à jour le 16/11/2026)</p>
+        </div>
     </div>
 
     <!-- ====== DIAPORAMA ====== -->
