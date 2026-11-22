@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Étude Réf. 71 Rolls Royce Phantom III Coupé de Ville</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f5f2eb;
+            color: #2e2b28;
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #fffdf9;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-radius: 24px;
+            padding: 2rem 2rem 3rem;
+            border: 1px solid #e2d9cf;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-top: 0;
+            margin-bottom: 0.4rem;
+            color: #3b2e24;
+            border-bottom: 3px solid #d4b68a;
+            padding-bottom: 0.6rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: #6d5d4e;
+            margin-bottom: 2rem;
+            font-style: italic;
+            background: #faf3e8;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            display: inline-block;
+        }
+        .intro-text {
+            background: #f9f1e6;
+            border-left: 6px solid #b58b5c;
+            padding: 1.2rem 1.5rem;
+            border-radius: 12px;
+            margin: 1.8rem 0 2.2rem;
+            font-size: 0.95rem;
+            color: #3d3228;
+        }
+        .intro-text p { margin: 0.4rem 0; }
+        .chrono-section {
+            margin: 2.8rem 0 1.5rem;
+            position: relative;
+        }
+        .chrono-section h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #5a3e2b;
+            margin: 0 0 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .chrono-section h2 .date-badge {
+            background: #bfa27a;
+            color: #fffdf9;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
+        }
+        .box-card {
+            background: #ffffff;
+            border: 1px solid #e6ddd3;
+            border-radius: 20px;
+            padding: 1.6rem 1.8rem;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            transition: border-color 0.15s;
+        }
+        .box-card:hover { border-color: #cbb295; }
+        .box-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.6rem;
+            border-bottom: 1px dashed #e0d4c6;
+            padding-bottom: 0.6rem;
+        }
+        .box-title {
+            font-size: 1.3rem;
+            font-weight: 650;
+            color: #3d2b1c;
+        }
+        .box-id {
+            font-family: 'Courier New', monospace;
+            background: #f1ebe4;
+            padding: 0.15rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #5b3f2c;
+            letter-spacing: 0.3px;
+        }
+        .box-dates {
+            font-size: 0.9rem;
+            color: #7a6857;
+            background: #fcf7f0;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+            border: 1px solid #e9dacc;
+        }
+        .variant {
+            margin: 1.4rem 0 0.8rem;
+            padding-left: 0.9rem;
+            border-left: 3px solid #cbb295;
+        }
+        .variant strong {
+            font-size: 1.1rem;
+            color: #4e3826;
+            letter-spacing: 0.2px;
+        }
+        .variant-date {
+            font-size: 0.85rem;
+            color: #8b7a69;
+            font-weight: 500;
+            margin-left: 0.6rem;
+        }
+        .desc {
+            margin: 0.5rem 0 1rem;
+            font-size: 0.98rem;
+            color: #2e2b28;
+        }
+        .desc p { margin: 0.4rem 0; }
+        .desc .legend {
+            font-size: 0.9rem;
+            color: #6d5d4e;
+            font-style: italic;
+            margin: 0.3rem 0;
+        }
+
+        /* Bloc pour les titres sans marge supérieure excessive */
+        .variant-block {
+            margin-top: 0;
+        }
+        .variant-block:not(:first-child) {
+            margin-top: 2rem;
+        }
+
+        /* ====== GALERIE PHOTOS AVEC ZOOM ×8 ====== */
+        .photos {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            gap: 12px !important;
+            margin: 1rem 0 0.6rem !important;
+        }
+        .photos .photo-item {
+            display: inline-block !important;
+            border-radius: 10px;
+            cursor: pointer;
+            line-height: 0;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1),
+                        box-shadow 0.3s ease,
+                        z-index 0s;
+        }
+        .photos .photo-item img {
+            display: block !important;
+            width: 160px !important;
+            height: 120px !important;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #e0d4c6;
+            background: #f8f4ef;
+            transition: border-color 0.3s ease, filter 0.3s ease;
+        }
+        .photos .photo-item:hover {
+            transform: scale(1.9);
+            transform-origin: center center;
+            z-index: 9999;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+        }
+        .photos .photo-item:hover img {
+            border-color: #b58b5c;
+            filter: brightness(1.05);
+        }
+        .box-card, .variant, .desc { overflow: visible !important; }
+
+        /* ====== DIAPORAMA ====== */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 10, 5, 0.93);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            animation: fadeIn 0.2s ease;
+        }
+        .lightbox.open { display: flex; }
+
+        .lightbox-stage {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 92vw;
+        }
+        
+        .lightbox-img-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox img.main-img {
+            max-width: 88vw;
+            max-height: 82vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+            animation: zoomIn 0.25s ease;
+            background: #2a231c;
+            display: block;
+        }
+
+        .lightbox .close-btn {
+            position: fixed;
+            top: 1.2rem;
+            right: 1.6rem;
+            font-size: 1.6rem;
+            color: #fff;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: background 0.15s;
+            z-index: 100005;
+        }
+        .lightbox .close-btn:hover { background: rgba(255,255,255,0.35); }
+
+        .lightbox .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2.4rem;
+            font-weight: 300;
+            color: #fff;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: background 0.15s, transform 0.15s;
+            z-index: 100010;
+            user-select: none;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .lightbox .nav-btn:hover { background: rgba(255,255,255,0.4); color: #000; }
+        .lightbox .nav-btn:active { transform: translateY(-50%) scale(0.94); }
+        .lightbox .nav-btn.prev { left: 10px; }
+        .lightbox .nav-btn.next { right: 10px; }
+        .lightbox .nav-btn[disabled] { opacity: 0.2; cursor: default; background: rgba(0,0,0,0.3); border-color: transparent; }
+
+        .lightbox .counter {
+            margin-top: 1rem;
+            color: #f0e6da;
+            font-size: 0.95rem;
+            font-weight: 500;
+            background: rgba(0,0,0,0.45);
+            padding: 0.35rem 1.1rem;
+            border-radius: 30px;
+            letter-spacing: 0.4px;
+        }
+        .lightbox .caption {
+            margin-top: 0.4rem;
+            color: #cbb295;
+            font-size: 0.82rem;
+            font-family: 'Courier New', monospace;
+            max-width: 70vw;
+            text-align: center;
+            word-break: break-all;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .footnote {
+            font-size: 0.85rem;
+            margin-top: 1.2rem;
+            color: #6d5d4e;
+            border-top: 1px solid #e6ddd3;
+            padding-top: 0.8rem;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.7rem; }
+            .box-header { flex-direction: column; gap: 0.3rem; }
+            .box-title { font-size: 1.1rem; }
+            .photos .photo-item img { width: 120px !important; height: 90px !important; }
+            .photos .photo-item:hover { transform: scale(3); }
+            .lightbox .nav-btn { width: 46px; height: 46px; font-size: 1.8rem; left: 5px; right: 5px; }
+            .lightbox img.main-img { max-width: 95vw; max-height: 76vh; }
+        }
+
+        /* ====== TABLEAU ====== */
+        .table-container {
+            overflow-x: auto;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        .custom-table {
+            border-collapse: collapse;
+            width: 100%;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            min-width: 900px;
+            border: 1px solid #a0a0a0;
+        }
+        .custom-table th, 
+        .custom-table td {
+            border: 1px solid #a0a0a0;
+            padding: 4px 6px;
+            vertical-align: middle;
+        }
+        .custom-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .bg-yellow {
+            background-color: #ffffb3;
+        }
+        .center {
+            text-align: center;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .col-ref { width: 4%; }
+        .col-id { width: 6%; }
+        .col-cond { width: 18%; }
+        .col-vehicule { width: 18%; white-space: nowrap; }
+        .col-couleur { width: 14%; }
+        .col-date { width: 13%; white-space: nowrap; }
+        .col-remarques { width: 27%; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Étude Réf. 71 Rolls Royce Phantom III coupé de ville 1939</h1>
+        <div class="subhead">Étude chronologique des conditionnements — mise à jour novembre 2026</div>
+
+        <div class="intro-text">
+            <p>Cette étude recense les différentes variantes de la Rolls-Royce Phantom III Coupé de Ville produites sous la référence 71.</p>
+            <p>Source : <i>Le Gourbi Solido</i> (forum de collectionneurs).</p>
+            <p><strong>🔍 Astuce :</strong> survolez une photo pour un zoom ×8, cliquez pour ouvrir le diaporama de la série.</p>
+        </div>
+
+        <!-- ========== TABLEAU DES VARIANTES ========== -->
+        <div class="table-container">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th class="col-ref">Réf.</th>
+                        <th class="col-id">Réf. ID</th>
+                        <th class="col-cond">CONDITIONNEMENT</th>
+                        <th class="col-vehicule">VÉHICULE</th>
+                        <th class="col-couleur">COULEUR</th>
+                        <th class="col-date">DATE PROD</th>
+                        <th class="col-remarques">REMARQUES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- BLOC 1 - BOÎTE VITRINE BORDEAUX BAOT-IVb (6 lignes) -->
+                    <tr>
+                        <td class="bg-yellow center bold" rowspan="24">71</td>
+                        <td class="center">71-01A</td>
+                        <td class="bg-yellow center bold" rowspan="6">boîte vitrine bordeaux<br>BAOT-IVb</td>
+                        <td class="bg-yellow center bold" rowspan="24">ROLLS-ROYCE<br>Phantom III<br>coupé de ville<br>1939</td>
+                        <td class="bg-yellow center">bleu foncé/bleu clair</td>
+                        <td class="bg-yellow center">09-1978 / 09-1979</td>
+                        <td class="bg-yellow">sièges gris foncé, beiges et olive</td>
+                    </tr>
+                    <tr>
+                        <td class="center">71-01B</td>
+                        <td class="bg-yellow center">gris foncé/gris clair</td>
+                        <td class="bg-yellow center">09-1978 / 09-1979</td>
+                        <td class="bg-yellow">sièges gris foncé, beiges et olive</td>
+                    </tr>
+                    <tr>
+                        <td class="center">71-01C</td>
+                        <td class="bg-yellow center">vert amande/beige</td>
+                        <td class="bg-yellow center">09-1978 / 09-1979</td>
+                        <td class="bg-yellow">sièges gris foncé, beiges et olive</td>
+                    </tr>
+                    <tr>
+                        <td class="center">71-01D</td>
+                        <td class="bg-yellow center">vert amande foncé/<br>gris beige</td>
+                        <td class="bg-yellow center">09-1978 / 09-1979</td>
+                        <td class="bg-yellow">sièges gris foncé, beiges et olive</td>
+                    </tr>
+                    <tr>
+                        <td class="center">71-01E</td>
+                        <td class="bg-yellow center">vert amande/marron<br>foncé</td>
+                        <td class="bg-yellow center">09-1978 / 09-1979</td>
+                        <td class="bg-yellow">sièges gris foncé, beiges et olive</td>
+                    </tr>
+                    <tr>
+                        <td class="center">71-01F</td>
+                        <td class="bg-yellow center">marron/beige</td>
+                        <td class="bg-yellow center">09-1978 / 09-1979</td>
+                        <td class="bg-yellow">sièges gris foncé, beiges et olive</td>
+                    </tr>
+
+                    <!-- BLOC 2 - BOÎTE VITRINE BORDEAUX BAOT-IVb (6 lignes) -->
+                    <tr>
+                        <td class="center">71-02A</td>
+                        <td class="bg-yellow center bold" rowspan="6">boîte vitrine bordeaux<br>BAOT-IVb</td>
+                        <td class="bg-yellow center">jaune paille/noir</td>
+                        <td class="bg-yellow center">09-1978 / 09-1979</td>
+                        <td class="bg-yellow">modèles réservés pour le marché anglais</td>
+                    </tr>
+                    <tr>
+                        <td class="center">71-02B-01</td>
+                        <td class="bg-yellow center">gris clair/gris foncé</td>
+                        <td class="bg-yellow center">09-1978 / 09-1979</td>
+                        <td class="bg-yellow">modèles réservés pour le marché anglais</td>
+                    </tr>
+                    <tr>
+                        <td class="center">71-02B-02</td>
+                        <td class="bg-yellow center">gris clair/gris foncé</td>
+                        <td class="bg-yellow center">09-1978 / 09-1979</td>
+                        <td class="bg-yellow">modèles réservés pour le marché anglais</td>
+                    </tr>
+                    <tr>
+                        <td class="center">71-02C</td>
+                        <td class="bg-yellow center">vert olive foncé/vert amande</td>
+                        <td class="bg-yellow center">09-1978 / 09-1979</td>
+                        <td class="bg-yellow">modèles réservés pour le marché anglais</td>
+                    </tr>
+                    <tr>
+                        <td class="center">71-02D</td>
+                        <td class="bg-yellow center">vert amande foncé/<br>vert olive</td>
+                        <td class="bg-yellow center">09-1978 / 09-1979</td>
+                        <td class="bg-yellow">modèles réservés pour le marché anglais</td>
+                    </tr>
+                    <tr>
+                        <td class="center">71-02E</td>
+                        <td class="bg-yellow center">brun/noir</td>
+                        <td class="bg-yellow center">09-1978 / 09-1979</td>
+                        <td class="bg-yellow">modèles réservés pour le marché anglais</td>
+                    </tr>
+
+                    <!-- BLOC 3 - BOÎTE VITRINE NOIRE BAOT-V -->
+                    <tr>
+                        <td class="center">71-03A</td>
+                        <td class="bg-yellow center bold">boîte vitrine noire<br>BAOT-V</td>
+                        <td class="bg-yellow center">gris foncé/gris clair</td>
+                        <td class="bg-yellow center">10-1979 / 03-1980</td>
+                        <td class="bg-yellow">sièges beiges</td>
+                    </tr>
+
+                    <!-- BLOC 4 - BOÎTE VITRINE NOIRE BAOT-VI -->
+                    <tr>
+                        <td class="center">71-04A</td>
+                        <td class="bg-yellow center bold">boîte vitrine noire<br>BAOT-VI</td>
+                        <td class="bg-yellow center">Sable/Noir</td>
+                        <td class="bg-yellow center">04-1980 / 11-1981</td>
+                        <td class="bg-yellow">sièges gris foncés</td>
+                    </tr>
+
+                    <!-- BLOC 5 - BOÎTE VITRINE SUR SOCLE BAOT-VII (4 lignes) -->
+                    <tr>
+                        <td class="center">71-05A</td>
+                        <td class="bg-yellow center bold" rowspan="4">boîte vitrine sur socle<br>BAOT-VII</td>
+                        <td class="bg-yellow center">beige/marron foncé</td>
+                        <td class="bg-yellow center">12-1981 / X-1983</td>
+                        <td class="bg-yellow">sièges gris clair, marron ou olive pour la teinte beige, et caramel pour les autres teintes. Immatriculation « standard » supprimée.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">71-05B</td>
+                        <td class="bg-yellow center">Sable/Noir</td>
+                        <td class="bg-yellow center">12-1981 / X-1983</td>
+                        <td class="bg-yellow">sièges gris clair, marron ou olive pour la teinte beige, et caramel pour les autres teintes. Immatriculation « standard » supprimée.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">71-05C</td>
+                        <td class="bg-yellow center">gris beige/marron<br>foncé</td>
+                        <td class="bg-yellow center">12-1981 / X-1983</td>
+                        <td class="bg-yellow">sièges gris clair, marron ou olive pour la teinte beige, et caramel pour les autres teintes. Immatriculation « standard » supprimée.</td>
+                    </tr>
+                    <tr>
+                        <td class="center">71-05D</td>
+                        <td class="bg-yellow center">beige rosé/chocolat</td>
+                        <td class="bg-yellow center">12-1981 / X-1983</td>
+                        <td class="bg-yellow">sièges gris clair, marron ou olive pour la teinte beige, et caramel pour les autres teintes. Immatriculation « standard » supprimée.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- ========== FIN DU TABLEAU ========== -->
+
+        <!-- ========== FICHES DÉTAILLÉES ========== -->
+        
+        <!-- SECTION 1 : BAOT-IVb (Standard) -->
+        <div class="chrono-section">
+            <h2>Réf. 71 : BAOT-IVb (Production standard)<span class="date-badge">09-1978 / 09-1979</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">BAOT-IVb</strong> <span class="box-dates">(09-1978 / 09-1979)</span> <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 71-01(x)</strong> <span class="variant-date">(09-1978 / 09-1979)</span>
+                <br><br><strong>Réf. ID : 71-01A</strong> (carrosserie : bleu foncé - châssis : noir)
+                <div class="desc">
+                    <p>Sièges gris foncé, beiges et olive.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-01A-01"><img src="https://i.postimg.cc/9XdVh2b9/71-01A-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-N-1-001.jpg" alt="71-01A 01"></span>
+                        <span class="photo-item" data-caption="71-01A-02"><img src="https://i.postimg.cc/05Yxsvnp/71-01A-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-N-1-002.jpg" alt="71-01A 02"></span>
+                        <span class="photo-item" data-caption="71-01A-03"><img src="https://i.postimg.cc/KcPF2bft/71-01A-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-N-1-003.jpg" alt="71-01A 03"></span>
+                        <span class="photo-item" data-caption="71-01A-04"><img src="https://i.postimg.cc/T2VG6x0m/71-01A-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-N-1-004.jpg" alt="71-01A 04"></span>
+                    </div>
+                </div>
+
+                <br><strong>Réf. ID : 71-01B</strong> (carrosserie : gris foncé - châssis : noir)
+                <div class="desc">
+                    <p>Sièges gris foncé, beiges et olive.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-01B-01"><img src="https://i.postimg.cc/htxkqWVw/71-01B-ROLLS-ROYCE-Phantom-III-Coupe-de-Ville-1939-004.jpg" alt="71-01B 01"></span>
+                        <span class="photo-item" data-caption="71-01B-02"><img src="https://i.postimg.cc/qvnPdV2S/71-01B-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-N-12-001.jpg" alt="71-01B 02"></span>
+                        <span class="photo-item" data-caption="71-01B-03"><img src="https://i.postimg.cc/sgSkRd5k/71-01B-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-N-12-002.jpg" alt="71-01B 03"></span>
+                        <span class="photo-item" data-caption="71-01B-04"><img src="https://i.postimg.cc/52vhMd8D/71-01B-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-N-12-003.jpg" alt="71-01B 04"></span>
+                        <span class="photo-item" data-caption="71-01B-05"><img src="https://i.postimg.cc/XYFR0Sw6/71-01B-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-N-12-004.jpg" alt="71-01B 05"></span>
+                        <span class="photo-item" data-caption="71-01B-06"><img src="https://i.postimg.cc/wjJCd8hp/71-01B-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-N-12-005.jpg" alt="71-01B 06"></span>
+                        <span class="photo-item" data-caption="71-01B-07"><img src="https://i.postimg.cc/zGWs1Znq/71-01B-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-N-12-006.jpg" alt="71-01B 07"></span>
+                        <span class="photo-item" data-caption="71-01B-08"><img src="https://i.postimg.cc/Z53GhtrT/71-01B-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-N-12-007.jpg" alt="71-01B 08"></span>
+                        <span class="photo-item" data-caption="71-01B-09"><img src="https://i.postimg.cc/XYFR0SwN/71-01B-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-N-12-008.jpg" alt="71-01B 09"></span>
+                    </div>
+                </div>
+
+                <br><strong>Réf. ID : 71-01C</strong> (carrosserie : vert amande - châssis : noir)
+                <div class="desc">
+                    <p>Sièges gris foncé, beiges et olive.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-01C-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=71-01C+01" alt="71-01C 01"></span>
+                    </div>
+                </div>
+
+                <br><strong>Réf. ID : 71-01D</strong> (carrosserie : vert amande foncé - châssis : gris beige)
+                <div class="desc">
+                    <p>Sièges gris foncé, beiges et olive.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-01D-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=71-01D+01" alt="71-01D 01"></span>
+                    </div>
+                </div>
+
+                <br><strong>Réf. ID : 71-01E</strong> (carrosserie : vert amande - châssis : marron foncé)
+                <div class="desc">
+                    <p>Sièges gris foncé, beiges et olive.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-01E-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=71-01E+01" alt="71-01E 01"></span>
+                    </div>
+                </div>
+
+                <br><strong>Réf. ID : 71-01F</strong> (carrosserie : marron - châssis : beige)
+                <div class="desc">
+                    <p>Sièges beiges foncé. Non référencé dans <i>'Jouets Solido 1957-1991'</i> B. AZEMA.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-01F-01"><img src="https://i.postimg.cc/N0tf3x2N/71-01F-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-011.jpg" alt="71-01F 01"></span>
+                        <span class="photo-item" data-caption="71-01F-02"><img src="https://i.postimg.cc/bvPN7RSC/71-01F-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-010.jpg" alt="71-01F 02"></span>
+                        <span class="photo-item" data-caption="71-01F-03"><img src="https://i.postimg.cc/RZJxgJPY/71-01F-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-003.jpg" alt="71-01F 03"></span>
+                        <span class="photo-item" data-caption="71-01F-04"><img src="https://i.postimg.cc/JhwVv7g5/71-01F-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-004.jpg" alt="71-01F 04"></span>
+                        <span class="photo-item" data-caption="71-01F-05"><img src="https://i.postimg.cc/0yK1VKtB/71-01F-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-005.jpg" alt="71-01F 05"></span>
+                        <span class="photo-item" data-caption="71-01F-06"><img src="https://i.postimg.cc/CKyTXMtH/71-01F-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-007.jpg" alt="71-01F 06"></span>
+                        <span class="photo-item" data-caption="71-01F-07"><img src="https://i.postimg.cc/jjV0mq9h/71-01F-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-008.jpg" alt="71-01F 07"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2 : BAOT-IVb (Marché Anglais) -->
+        <div class="chrono-section">
+            <h2>Réf. 71 : BAOT-IVb (Production destinée au marché Anglais)<span class="date-badge">09-1978 / 09-1979</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">BAOT-IVb</strong> <span class="box-dates">(09-1978 / 09-1979)</span> <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 71-02(x)</strong> <span class="variant-date">(09-1978 / 09-1979)</span>
+                <br><br><strong>Réf. ID : 71-02A</strong> (carrosserie : jaune paille - châssis : noir)
+                <div class="desc">
+                    <p>Modèle réservé pour le marché anglais.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-02A-01"><img src="https://i.postimg.cc/k5jZ9nYk/71-02A-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-001.jpg" alt="71-02A 01"></span>
+                        <span class="photo-item" data-caption="71-02A-02"><img src="https://i.postimg.cc/yNf5BVrq/71-02A-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-002.jpg" alt="71-02A 02"></span>
+                        <span class="photo-item" data-caption="71-02A-03"><img src="https://i.postimg.cc/d0WXvqSP/71-02A-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-003.jpg" alt="71-02A 03"></span>
+                        <span class="photo-item" data-caption="71-02A-04"><img src="https://i.postimg.cc/9fxSVWg6/71-02A-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-004.jpg" alt="71-02A 04"></span>
+                        <span class="photo-item" data-caption="71-02A-05"><img src="https://i.postimg.cc/5tPG1xkV/71-02A-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-005.jpg" alt="71-02A 05"></span>
+                        <span class="photo-item" data-caption="71-02A-06"><img src="https://i.postimg.cc/9fxSVWN2/71-02A-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-006.jpg" alt="71-02A 06"></span>
+                        <span class="photo-item" data-caption="71-02A-07"><img src="https://i.postimg.cc/xds7Y0FY/71-02A-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-007.jpg" alt="71-02A 07"></span>
+                        <span class="photo-item" data-caption="71-02A-08"><img src="https://i.postimg.cc/wBWPH6bg/71-02A-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-008.jpg" alt="71-02A 08"></span>
+                    </div>
+                </div>
+
+                <br><br><strong>Réf. ID : 71-02B-01</strong> (carrosserie : gris clair - châssis : gris foncé)
+                <div class="desc">
+                    <p>Modèle réservé pour le marché anglais.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-02B-01"><img src="https://i.postimg.cc/Bvx6wVhj/71-02B-01-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-001.jpg" alt="71-02B 01"></span>
+                        <span class="photo-item" data-caption="71-02B-02"><img src="https://i.postimg.cc/KYnzsH9j/71-02B-01-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-002.jpg" alt="71-02B 02"></span>
+                        <span class="photo-item" data-caption="71-02B-03"><img src="https://i.postimg.cc/W4Rz8v7M/71-02B-01-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-003.jpg" alt="71-02B 03"></span>
+                        <span class="photo-item" data-caption="71-02B-04"><img src="https://i.postimg.cc/hG9j35Ch/71-02B-01-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-004.jpg" alt="71-02B 04"></span>
+                        <span class="photo-item" data-caption="71-02B-05"><img src="https://i.postimg.cc/3wgRbcL0/71-02B-01-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-005.jpg" alt="71-02B 05"></span>
+                        <span class="photo-item" data-caption="71-02B-06"><img src="https://i.postimg.cc/xdKCF4sb/71-02B-01-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-006.jpg" alt="71-02B 06"></span>
+                        <span class="photo-item" data-caption="71-02B-07"><img src="https://i.postimg.cc/KYnzsH9M/71-02B-01-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-007.jpg" alt="71-02B 07"></span>
+                        <span class="photo-item" data-caption="71-02B-08"><img src="https://i.postimg.cc/wBhvbGWN/71-02B-01-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-008.jpg" alt="71-02B 08"></span>
+                        <span class="photo-item" data-caption="71-02B-09"><img src="https://i.postimg.cc/R0cFbDPf/71-02B-01-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-009.jpg" alt="71-02B 09"></span>
+                    </div>
+                </div>
+
+                <br><br><strong>Réf. ID : 71-02B-02</strong> (carrosserie : gris clair - châssis : gris foncé)
+                <div class="desc">
+                    <p>Modèle réservé pour le marché anglais. Le gris de la carrosserie est plus clair que la Réf. ID : 71-02B-01.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-02B-01"><img src="https://i.postimg.cc/QNnXSDXz/71-02B-02-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-001.jpg" alt="71-02B 01"></span>
+                        <span class="photo-item" data-caption="71-02B-02"><img src="https://i.postimg.cc/44FJwGJj/71-02B-02-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-002.jpg" alt="71-02B 02"></span>
+                        <span class="photo-item" data-caption="71-02B-03"><img src="https://i.postimg.cc/qBZkQrkS/71-02B-02-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-003.jpg" alt="71-02B 03"></span>
+                        <span class="photo-item" data-caption="71-02B-04"><img src="https://i.postimg.cc/9XNW12WS/71-02B-02-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-004.jpg" alt="71-02B 04"></span>
+                        <span class="photo-item" data-caption="71-02B-05"><img src="https://i.postimg.cc/dQSqnFsP/71-02B-02-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-005.jpg" alt="71-02B 05"></span>
+                        <span class="photo-item" data-caption="71-02B-06"><img src="https://i.postimg.cc/L40HvS9F/71-02B-02-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-006.jpg" alt="71-02B 06"></span>
+                        <span class="photo-item" data-caption="71-02B-07"><img src="https://i.postimg.cc/8kn1wGpS/71-02B-02-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-007.jpg" alt="71-02B 07"></span>
+                        <span class="photo-item" data-caption="71-02B-08"><img src="https://i.postimg.cc/DfY25hvK/71-02B-02-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-008.jpg" alt="71-02B 08"></span>
+                    </div>
+                </div>
+
+                <br><br><strong>Réf. ID : 71-02C</strong> (carrosserie : vert olive foncé - châssis : vert amande)
+                <div class="desc">
+                    <p>Modèle réservé pour le marché anglais.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-02C-01"><img src="https://i.postimg.cc/HWfP2vyc/71-02C-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-001.jpg" alt="71-02C 01"></span>
+                        <span class="photo-item" data-caption="71-02C-02"><img src="https://i.postimg.cc/05LHfXwK/71-02C-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-002.jpg" alt="71-02C 02"></span>
+                        <span class="photo-item" data-caption="71-02C-03"><img src="https://i.postimg.cc/jqGkX37J/71-02C-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-003.jpg" alt="71-02C 03"></span>
+                        <span class="photo-item" data-caption="71-02C-04"><img src="https://i.postimg.cc/J79dqYkX/71-02C-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-004.jpg" alt="71-02C 04"></span>
+                        <span class="photo-item" data-caption="71-02C-05"><img src="https://i.postimg.cc/pVg1ZcFD/71-02C-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-005.jpg" alt="71-02C 05"></span>
+                        <span class="photo-item" data-caption="71-02C-06"><img src="https://i.postimg.cc/xjWFRpzM/71-02C-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-006.jpg" alt="71-02C 06"></span>
+                        <span class="photo-item" data-caption="71-02C-07"><img src="https://i.postimg.cc/kMkhcYbW/71-02C-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-007.jpg" alt="71-02C 07"></span>
+                        <span class="photo-item" data-caption="71-02C-08"><img src="https://i.postimg.cc/GhGgSPFt/71-02C-ROLLS-ROYCE-PHANTOM-III-COUPE-DE-VILLE-008.jpg" alt="71-02C 08"></span>
+                    </div>
+                </div>
+
+                <br><br><strong>Réf. ID : 71-02D</strong> (carrosserie : vert amande foncé - châssis : vert olive)
+                <div class="desc">
+                    <p>Modèle réservé pour le marché anglais.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-02D-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=71-02D+01" alt="71-02D 01"></span>
+                    </div>
+                </div>
+
+                <br><br><strong>Réf. ID : 71-02E</strong> (carrosserie : brun - châssis : noir)
+                <div class="desc">
+                    <p>Modèle réservé pour le marché anglais.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-02E-01"><img src="https://i.postimg.cc/0yrMynVX/71-02E-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-001.jpg" alt="71-02E 01"></span>
+                        <span class="photo-item" data-caption="71-02E-02"><img src="https://i.postimg.cc/t47Z4kBM/71-02E-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-002.jpg" alt="71-02E 02"></span>
+                        <span class="photo-item" data-caption="71-02E-03"><img src="https://i.postimg.cc/6pT2pcM1/71-02E-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-003.jpg" alt="71-02E 03"></span>
+                        <span class="photo-item" data-caption="71-02E-04"><img src="https://i.postimg.cc/bwMGDn50/71-02E-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-004.jpg" alt="71-02E 04"></span>
+                        <span class="photo-item" data-caption="71-02E-05"><img src="https://i.postimg.cc/W1KDFZyW/71-02E-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-005.jpg" alt="71-02E 05"></span>
+                        <span class="photo-item" data-caption="71-02E-06"><img src="https://i.postimg.cc/NjVy9Xnb/71-02E-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-006.jpg" alt="71-02E 06"></span>
+                        <span class="photo-item" data-caption="71-02E-07"><img src="https://i.postimg.cc/y85JgRGv/71-02E-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-007.jpg" alt="71-02E 07"></span>
+                        <span class="photo-item" data-caption="71-02E-08"><img src="https://i.postimg.cc/NjVy9Xnd/71-02E-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-008.jpg" alt="71-02E 08"></span>
+                        <span class="photo-item" data-caption="71-02E-09"><img src="https://i.postimg.cc/VkTSrthH/71-02E-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-009.jpg" alt="71-02E 09"></span>
+                        <span class="photo-item" data-caption="71-02E-10"><img src="https://i.postimg.cc/DwDWJGNM/71-02E-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-010.jpg" alt="71-02E 10"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3 : BAOT-V -->
+        <div class="chrono-section">
+            <h2>Réf. 71 : BAOT-V<span class="date-badge">10-1979 / 03-1980</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">BAOT-V</strong> <span class="box-dates">(10-1979 / 03-1980)</span> <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 71-03(x)</strong> <span class="variant-date">(10-1979 / 03-1980)</span>
+                <br><br><strong>Réf. ID : 71-03A</strong> (carrosserie : gris foncé - châssis : gris clair)
+                <div class="desc">
+                    <p>Sièges beiges.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-03A-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=71-03A+01" alt="71-03A 01"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SECTION 4 : BAOT-VI -->
+        <div class="chrono-section">
+            <h2>Réf. 71 : BAOT-VI<span class="date-badge">04-1980 / 11-1981</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">BAOT-VI</strong> <span class="box-dates">(04-1980 / 11-1981)</span> <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 71-04(x)</strong><span class="variant-date">(04-1980 / 11-1981)</span>
+                <br><br><strong>Réf. ID : 71-04A</strong> (carrosserie : Sable - châssis : Noir)
+                <div class="desc">
+                    <p>Sièges gris foncés.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-04A-01"><img src="https://i.postimg.cc/9FkXJhBf/71-04A-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-001.jpg" alt="71-04A 01"></span>
+                        <span class="photo-item" data-caption="71-04A-02"><img src="https://i.postimg.cc/ZKQYVSL0/71-04A-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-002.jpg" alt="71-04A 02"></span>
+                        <span class="photo-item" data-caption="71-04A-03"><img src="https://i.postimg.cc/kXHMfmyG/71-04A-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-003.jpg" alt="71-04A 03"></span>
+                        <span class="photo-item" data-caption="71-04A-04"><img src="https://i.postimg.cc/hPY4pB0j/71-04A-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-004.jpg" alt="71-04A 04"></span>
+                        <span class="photo-item" data-caption="71-04A-05"><img src="https://i.postimg.cc/WbypXv7d/71-04A-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-005.jpg" alt="71-04A 05"></span>
+                        <span class="photo-item" data-caption="71-04A-06"><img src="https://i.postimg.cc/hPY4pB0f/71-04A-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-006.jpg" alt="71-04A 06"></span>
+                        <span class="photo-item" data-caption="71-04A-07"><img src="https://i.postimg.cc/Fs6FD4xd/71-04A-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-007.jpg" alt="71-04A 07"></span>
+                        <span class="photo-item" data-caption="71-04A-08"><img src="https://i.postimg.cc/HsNWBgtJ/71-04A-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-008.jpg" alt="71-04A 08"></span>
+                        <span class="photo-item" data-caption="71-04A-09"><img src="https://i.postimg.cc/QxzN03qK/71-04A-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-009.jpg" alt="71-04A 09"></span>
+                        <span class="photo-item" data-caption="71-04A-10"><img src="https://i.postimg.cc/8PYktSbr/71-04A-ROLLS-ROYCE-PHANTOM-II-COUPE-DE-VILLE-010.jpg" alt="71-04A 10"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SECTION 5 : BAOT-VII -->
+        <div class="chrono-section">
+            <h2>Réf. 71 : BAOT-VII<span class="date-badge">12-1981 / X-1983</span></h2>
+        </div>
+        <div class="box-card">
+            <div class="variant-block">
+                <strong style="font-size: 1.1rem; color: #4e3826;">BAOT-VII</strong> <span class="box-dates">(12-1981 / X-1983)</span> <strong style="font-size: 1.1rem; color: #4e3826;">Réf. ID : 71-05(x)</strong><span class="variant-date">(12-1981 / X-1983)</span>
+                <br><br><strong>Réf. ID : 71-05A</strong> (carrosserie : beige - châssis : marron foncé)
+                <div class="desc">
+                    <p>Sièges gris clair, marron ou olive pour la teinte beige, et caramel pour les autres teintes. Immatriculation « standard » supprimée.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-05A-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=71-05A+01" alt="71-05A 01"></span>
+                    </div>
+                </div>
+
+                <br><br><strong>Réf. ID : 71-05B</strong> (carrosserie : Sable - châssis : Noir)
+                <div class="desc">
+                    <p>Sièges gris clair, marron ou olive pour la teinte beige, et caramel pour les autres teintes. Immatriculation « standard » supprimée.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-05B-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=71-05B+01" alt="71-05B 01"></span>
+                    </div>
+                </div>
+
+                <br><br><strong>Réf. ID : 71-05C</strong> (carrosserie : gris beige - châssis : marron foncé)
+                <div class="desc">
+                    <p>Sièges gris clair, marron ou olive pour la teinte beige, et caramel pour les autres teintes. Immatriculation « standard » supprimée.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-05C-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=71-05C+01" alt="71-05C 01"></span>
+                    </div>
+                </div>
+
+                <br><br><strong>Réf. ID : 71-05D</strong> (carrosserie : beige rosé - châssis : chocolat)
+                <div class="desc">
+                    <p>Sièges gris clair, marron ou olive pour la teinte beige, et caramel pour les autres teintes. Immatriculation « standard » supprimée.</p>
+                    <div class="photos">
+                        <span class="photo-item" data-caption="71-05D-01"><img src="https://placehold.co/400x300/e0d4c6/5a3e2b?text=71-05D+01" alt="71-05D 01"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footnote">
+            <p>Document généré à partir de recherches et de documentations. Les dates sont données à titre indicatif et peuvent être approximatives. Pour toute suggestion ou information complémentaire, se référer au forum <a href="https://le-gourbi-solido.forumactif.com" target="_blank" rel="noopener noreferrer"><em>Le Gourbi Solido</em></a>.</p>
+            <p style="text-align:right; font-size:0.8rem;">(mise à jour le 13/11/2026)</p>
+        </div>
+    </div>
+
+    <!-- ====== DIAPORAMA ====== -->
+    <div class="lightbox" id="lightbox">
+        <button class="close-btn" id="lightbox-close" aria-label="Fermer">✕</button>
+        <div class="lightbox-stage">
+            <div class="lightbox-img-wrap">
+                <button class="nav-btn prev" id="lightbox-prev" aria-label="Précédent">‹</button>
+                <img class="main-img" src="" alt="Photo agrandie" id="lightbox-img">
+                <button class="nav-btn next" id="lightbox-next" aria-label="Suivant">›</button>
+            </div>
+            <div class="counter" id="lightbox-counter">1 / 1</div>
+            <div class="caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const counter = document.getElementById('lightbox-counter');
+            const caption = document.getElementById('lightbox-caption');
+            const prevBtn = document.getElementById('lightbox-prev');
+            const nextBtn = document.getElementById('lightbox-next');
+            const closeBtn = document.getElementById('lightbox-close');
+
+            let currentSeries = [];
+            let currentIndex = 0;
+
+            function openSlideshow(photoItem) {
+                const gallery = photoItem.closest('.photos');
+                if (!gallery) return;
+
+                currentSeries = Array.from(gallery.querySelectorAll('.photo-item')).map(el => ({
+                    src: el.querySelector('img').src,
+                    caption: el.dataset.caption || ''
+                }));
+
+                currentIndex = Array.from(gallery.querySelectorAll('.photo-item')).indexOf(photoItem);
+                if (currentIndex < 0) currentIndex = 0;
+
+                renderSlide();
+                lightbox.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function renderSlide() {
+                if (!currentSeries.length) return;
+                const item = currentSeries[currentIndex];
+                lightboxImg.src = item.src;
+                lightboxImg.alt = item.caption || 'Photo';
+                caption.textContent = item.caption;
+                counter.textContent = (currentIndex + 1) + ' / ' + currentSeries.length;
+
+                const onlyOne = currentSeries.length <= 1;
+                prevBtn.disabled = onlyOne;
+                nextBtn.disabled = onlyOne;
+            }
+
+            function goPrev() {
+                if (currentSeries.length <= 1) return;
+                currentIndex = (currentIndex - 1 + currentSeries.length) % currentSeries.length;
+                renderSlide();
+            }
+            function goNext() {
+                if (currentSeries.length <= 1) return;
+                currentIndex = (currentIndex + 1) % currentSeries.length;
+                renderSlide();
+            }
+
+            function closeSlideshow() {
+                lightbox.classList.remove('open');
+                document.body.style.overflow = '';
+                lightboxImg.src = '';
+                currentSeries = [];
+                currentIndex = 0;
+            }
+
+            document.querySelectorAll('.photo-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openSlideshow(this);
+                });
+            });
+
+            prevBtn.addEventListener('click', function(e) { e.stopPropagation(); goPrev(); });
+            nextBtn.addEventListener('click', function(e) { e.stopPropagation(); goNext(); });
+            closeBtn.addEventListener('click', closeSlideshow);
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) closeSlideshow();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('open')) return;
+                if (e.key === 'Escape') closeSlideshow();
+                else if (e.key === 'ArrowLeft') goPrev();
+                else if (e.key === 'ArrowRight') goNext();
+            });
+        })();
+    </script>
+</body>
+</html>
